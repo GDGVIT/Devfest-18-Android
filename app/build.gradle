@@ -11,7 +11,7 @@ apply plugin: 'kotlin-kapt'
 ext.anko_version = '0.10.5'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.dscvit.android.devfest18"
         minSdkVersion 19
@@ -30,13 +30,13 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:support-v4:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'androidx.appcompat:appcompat:1.0.0-rc02'
+    implementation 'com.google.android.material:material:1.0.0-rc02'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-rc02'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
 
 
     // Anko
@@ -50,19 +50,22 @@ dependencies {
     def nav_version = "1.0.0-alpha04"
 
     // Room
-    implementation "android.arch.persistence.room:runtime:$room_version"
-    kapt "android.arch.persistence.room:compiler:$room_version"
+    implementation 'androidx.room:room-runtime:2.0.0-rc01'
+    kapt 'androidx.room:room-compiler:2.0.0-rc01'
 
     // ViewModel + LiveData
-    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-    kapt "android.arch.lifecycle:compiler:$lifecycle_version"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-rc01'
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0-rc01'
 
     // Paging
-    implementation "android.arch.paging:runtime:$paging_version"
+    implementation 'androidx.paging:paging-runtime:2.0.0-rc01'
 
     // Navigation
     implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version"
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"
+
+    // Android - MDC
+    implementation 'com.google.android.material:material:1.0.0-alpha1'
 
     // GSON
     implementation 'com.google.code.gson:gson:2.8.2'

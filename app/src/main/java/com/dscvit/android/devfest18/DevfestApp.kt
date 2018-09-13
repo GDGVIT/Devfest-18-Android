@@ -1,7 +1,7 @@
 package com.dscvit.android.devfest18
 
 import android.app.Activity
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.app.Application
 import com.dscvit.android.devfest18.di.AppInjector
 import dagger.android.DispatchingAndroidInjector

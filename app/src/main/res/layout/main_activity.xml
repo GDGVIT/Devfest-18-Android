@@ -30,7 +30,7 @@ tools:context=".MainActivity">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/indigo"
             app:fabAlignmentMode="center"
             app:navigationIcon="@drawable/ic_menu_black_24dp" />
 

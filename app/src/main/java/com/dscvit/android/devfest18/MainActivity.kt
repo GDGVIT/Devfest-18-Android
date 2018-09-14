@@ -3,6 +3,7 @@ package com.dscvit.android.devfest18
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import com.dscvit.android.devfest18.ui.agenda.AgendaFragment
 import com.dscvit.android.devfest18.ui.main.MainFragment
 import com.dscvit.android.devfest18.ui.main.bottomsheet.NavigationBottomSheetFragment
 import dagger.android.DispatchingAndroidInjector
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
+                    .replace(R.id.container, AgendaFragment.newInstance())
                     .commitNow()
         }
 

@@ -1,3 +1,75 @@
 <resources>
     <string name="app_name">Devfest \'18</string>
+
+    <!--String arrays for agenda 6th Oct-->
+    <string-array name="agenda_6_oct_events">
+        <item>Speakers Session</item>
+        <item>Lunch</item>
+        <item>Panel Discussion</item>
+        <item>Networking Session</item>
+    </string-array>
+    <string-array name="agenda_6_oct_timings">
+        <item>9:00 AM - 1:00 PM</item>
+        <item>1:00 PM - 2:00 PM</item>
+        <item>2:00 PM - 4:00 PM</item>
+        <item>4:00 PM - 6:00 PM</item>
+    </string-array>
+    <string-array name="agenda_6_oct_icons">
+        <item>ic_mic_black_24dp</item>
+        <item>ic_food_black</item>
+        <item>ic_supervisor_account_black_24dp</item>
+        <item>ic_forum_black_24dp</item>
+    </string-array>
+    <string-array name="agenda_6_oct_colors">
+        <item>yellow</item>
+        <item>teal</item>
+        <item>indigo</item>
+        <item>light_blue</item>
+    </string-array>
+
+    <!--String arrays for agenda 7th Oct-->
+    <string-array name="agenda_7_oct_events">
+        <item>Opening Speech</item>
+        <item>Pitching</item>
+        <item>Break</item>
+        <item>Pitching</item>
+        <item>Lunch</item>
+        <item>Pitching</item>
+        <item>Break</item>
+        <item>Pitching</item>
+        <item>Results</item>
+    </string-array>
+    <string-array name="agenda_7_oct_timings">
+        <item>9:00 AM - 10:00 AM</item>
+        <item>10:00 AM - 11:30 AM</item>
+        <item>11:30 AM - 12:00 PM</item>
+        <item>12:00 PM - 1:30 PM</item>
+        <item>1:30 PM - 2:30 PM</item>
+        <item>2:30 PM - 4:00 PM</item>
+        <item>4:00 PM - 4:30 PM</item>
+        <item>4:30 PM - 6:00 PM</item>
+        <item>6:00 PM</item>
+    </string-array>
+    <string-array name="agenda_7_oct_icons">
+        <item>ic_mic_black_24dp</item>
+        <item>ic_projector_screen</item>
+        <item>ic_coffee_black</item>
+        <item>ic_projector_screen</item>
+        <item>ic_food_black</item>
+        <item>ic_projector_screen</item>
+        <item>ic_coffee_black</item>
+        <item>ic_projector_screen</item>
+        <item>ic_trophy_black</item>
+    </string-array>
+    <string-array name="agenda_7_oct_colors">
+        <item>yellow</item>
+        <item>indigo</item>
+        <item>orange</item>
+        <item>indigo</item>
+        <item>teal</item>
+        <item>indigo</item>
+        <item>orange</item>
+        <item>indigo</item>
+        <item>indigo_dark</item>
+    </string-array>
 </resources>

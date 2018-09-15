@@ -23,6 +23,11 @@ import android.util.Log
 import com.dscvit.android.devfest18.R.id.scratchCardParentView
 import com.dscvit.android.devfest18.R.id.keyTextView
 import com.dscvit.android.devfest18.R.id.afterRevealCardView
+import com.dscvit.android.devfest18.R.id.scratchCardParentView
+import com.dscvit.android.devfest18.R.id.keyTextView
+import com.dscvit.android.devfest18.R.id.afterRevealCardView
+
+
 
 
 
@@ -46,16 +51,40 @@ class ScratchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        afterRevealCardView.visibility = View.GONE
+        scratchCardParentView.visibility = View.GONE;
+        afterRevealCardView.visibility = View.GONE;
 
         sharedpreferences = activity?.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE)
 
-        sharedpreferences?.let { sharedPreferences ->
-            if (sharedPreferences.getBoolean("revealed", false)) {
-                afterRevealCardView.visibility = View.VISIBLE
-                keyTextView.text = sharedPreferences.getString(CouponKey, "")
-                scratchCardParentView.visibility = View.GONE
+        enabledRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val isEnabled = dataSnapshot.getValue(Boolean::class.java) ?: true
+                if (isEnabled) {
+                    placeHolderView.setVisibility(View.GONE)
+                    scratchCardParentView.visibility = View.VISIBLE
+                    sharedpreferences?.let { sharedPreferences ->
+                        if (sharedPreferences.getBoolean("revealed", false)) {
+                            placeHolderView.setVisibility(View.GONE)
+                            afterRevealCardView.visibility = View.VISIBLE
+                            keyTextView.text = sharedPreferences.getString(CouponKey, "")
+                            scratchCardParentView.visibility = View.GONE
+                        }
+                    }
+                } else {
+                    placeHolderView.visibility = View.VISIBLE
+                    scratchCardParentView.visibility = View.GONE
+                    afterRevealCardView.visibility = View.GONE
+                }
+
+                Log.v("isEnabled", "" + isEnabled)
             }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        })
+
+        sharedpreferences?.let { sharedPreferences ->
 
             if (sharedPreferences.contains(CouponKey)) {
                 scratchView?.text = sharedPreferences.getString(CouponKey, "")

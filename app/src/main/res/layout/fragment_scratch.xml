@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp">
 
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="16dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp">
 

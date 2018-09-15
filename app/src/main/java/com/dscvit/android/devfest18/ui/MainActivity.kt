@@ -1,15 +1,14 @@
-package com.dscvit.android.devfest18
+package com.dscvit.android.devfest18.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import com.dscvit.android.devfest18.R
 import com.dscvit.android.devfest18.ui.agenda.AgendaFragment
-import com.dscvit.android.devfest18.ui.main.MainFragment
-import com.dscvit.android.devfest18.ui.main.bottomsheet.NavigationBottomSheetFragment
+import com.dscvit.android.devfest18.ui.bottomsheet.NavigationBottomSheetFragment
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.main_activity.*
-import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {

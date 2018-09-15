@@ -18,13 +18,22 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:background="@drawable/bg_nav_sheet_selection"
+        android:drawableLeft="@drawable/ic_date_range_black_24dp"
+        android:drawablePadding="16dp"
+        android:gravity="center_vertical"
         android:padding="@dimen/textview_padding"
-        android:text="Home" />
+        android:text="Agenda" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:drawableLeft="@drawable/ic_account_multiple_white"
+        android:drawablePadding="16dp"
+        android:gravity="center_vertical"
         android:padding="@dimen/textview_padding"
         android:text="Sponsors" />
 
@@ -32,6 +41,10 @@
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:drawableLeft="@drawable/ic_info_white_24dp"
+        android:drawablePadding="16dp"
+        android:gravity="center_vertical"
         android:padding="@dimen/textview_padding"
         android:text="About" />
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.dscvit.android.devfest18.ui.main.bottomsheet
+package com.dscvit.android.devfest18.ui.bottomsheet
 
 import android.app.Dialog
 import android.os.Bundle

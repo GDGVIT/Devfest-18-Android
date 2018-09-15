@@ -1,6 +1,6 @@
 package com.dscvit.android.devfest18.di.module
 
-import com.dscvit.android.devfest18.MainActivity
+import com.dscvit.android.devfest18.ui.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

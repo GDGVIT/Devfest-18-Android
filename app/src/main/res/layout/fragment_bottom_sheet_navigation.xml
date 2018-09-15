@@ -12,39 +12,83 @@
         android:gravity="center"
         android:padding="@dimen/textview_padding"
         android:text="Navigation"
-        android:textAppearance="@android:style/TextAppearance.Material.Large" />
+        android:textColor="@android:color/white"
+        android:textSize="22sp" />
 
-    <TextView
-        android:id="@+id/textView2"
+    <LinearLayout
+        android:id="@+id/layout_nav_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:background="@drawable/bg_nav_sheet_selection"
-        android:drawableLeft="@drawable/ic_date_range_black_24dp"
-        android:drawablePadding="16dp"
-        android:gravity="center_vertical"
-        android:padding="@dimen/textview_padding"
-        android:text="Agenda" />
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true">
 
-    <TextView
-        android:id="@+id/textView3"
+        <TextView
+            android:id="@+id/text_nav_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/ic_menu_black_24dp"
+            android:drawablePadding="16dp"
+            android:gravity="center_vertical"
+            android:padding="@dimen/textview_padding"
+            android:text="Main" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_nav_agenda"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:drawableLeft="@drawable/ic_account_multiple_white"
-        android:drawablePadding="16dp"
-        android:gravity="center_vertical"
-        android:padding="@dimen/textview_padding"
-        android:text="Sponsors" />
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true">
 
-    <TextView
-        android:id="@+id/textView4"
+        <TextView
+            android:id="@+id/text_nav_agenda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:drawableLeft="@drawable/ic_date_range_black_24dp"
+            android:drawablePadding="16dp"
+            android:gravity="center_vertical"
+            android:padding="@dimen/textview_padding"
+            android:text="Agenda" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_nav_sponsors"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:drawableLeft="@drawable/ic_info_white_24dp"
-        android:drawablePadding="16dp"
-        android:gravity="center_vertical"
-        android:padding="@dimen/textview_padding"
-        android:text="About" />
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/text_nav_sponsors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:drawableLeft="@drawable/ic_account_multiple_white"
+            android:drawablePadding="16dp"
+            android:gravity="center_vertical"
+            android:padding="@dimen/textview_padding"
+            android:text="Sponsors" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_nav_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/text_nav_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:drawableLeft="@drawable/ic_info_white_24dp"
+            android:drawablePadding="16dp"
+            android:gravity="center_vertical"
+            android:padding="@dimen/textview_padding"
+            android:text="About" />
+    </LinearLayout>
 </LinearLayout>

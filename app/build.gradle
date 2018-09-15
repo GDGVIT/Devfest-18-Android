@@ -27,6 +27,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        checkReleaseBuilds false
+    }
 }
 
 dependencies {
@@ -86,6 +89,12 @@ dependencies {
 
     // FCM
     implementation 'com.google.firebase:firebase-messaging:17.3.1'
+
+    // Firebase Realtime DB
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+
+    // ScratchView
+    implementation 'com.github.cooltechworks:ScratchView:v1.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

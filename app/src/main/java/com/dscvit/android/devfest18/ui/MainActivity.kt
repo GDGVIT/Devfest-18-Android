@@ -3,15 +3,19 @@ package com.dscvit.android.devfest18.ui
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import com.dscvit.android.devfest18.R
 import com.dscvit.android.devfest18.ui.agenda.AgendaFragment
+import com.dscvit.android.devfest18.ui.bottomsheet.NavClickListener
 import com.dscvit.android.devfest18.ui.bottomsheet.NavigationBottomSheetFragment
+import com.dscvit.android.devfest18.ui.main.MainFragment
+import com.dscvit.android.devfest18.ui.scratch.ScratchFragment
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.main_activity.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, NavClickListener {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -20,6 +24,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     private val naviBottomSheetFragment = NavigationBottomSheetFragment()
 
+    companion object {
+        var selectedFragmentIndex = 0
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -27,14 +35,30 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 //        setSupportActionBar(bottom_app_bar)
 
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, AgendaFragment.newInstance())
-                    .commitNow()
+            updateFragment(selectedFragmentIndex)
         }
 
         bottom_app_bar.setNavigationOnClickListener {
+            naviBottomSheetFragment.navClickListener = this
             naviBottomSheetFragment.show(supportFragmentManager, naviBottomSheetFragment.tag)
         }
+    }
+
+    private fun updateFragment(index: Int) {
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.container, when(index) {
+                    0 -> MainFragment.newInstance()
+                    1 -> AgendaFragment.newInstance()
+                    2 -> ScratchFragment.newInstance()
+                    else -> MainFragment.newInstance()
+                })
+                .commitNow()
+    }
+
+    override fun onNavItemClicked(index: Int) {
+        naviBottomSheetFragment.dismiss()
+        selectedFragmentIndex = index
+        updateFragment(index)
     }
 
 }

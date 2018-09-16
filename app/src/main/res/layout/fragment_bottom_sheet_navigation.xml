@@ -1,9 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_nav_before_auth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/account_image_size"
+            android:layout_height="@dimen/account_image_size"
+            android:layout_marginStart="@dimen/account_items_margin"
+            android:layout_marginTop="@dimen/account_items_margin"
+            android:layout_marginBottom="@dimen/account_items_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_account_circle_white_24dp" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_nav_after_auth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/layout_nav_before_auth"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_account"
+            android:layout_width="@dimen/account_image_size"
+            android:layout_height="@dimen/account_image_size"
+            android:layout_marginStart="@dimen/account_items_margin"
+            android:layout_marginTop="@dimen/account_items_margin"
+            android:layout_marginBottom="@dimen/account_items_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/text_account_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/account_items_margin"
+            android:text="Yaswant Narayan"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintStart_toEndOf="@+id/image_account"
+            tools:text="Yaswant Narayan" />
+
+        <TextView
+            android:id="@+id/text_account_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/account_items_margin"
+            android:text="yoyaswant@gmail.com"
+            app:layout_constraintStart_toEndOf="@+id/image_account"
+            app:layout_constraintTop_toBottomOf="@+id/text_account_username"
+            tools:text="yoyaswant@gmail.com" />
+
+        <ImageView
+            android:id="@+id/sign_out_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:padding="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            app:srcCompat="@drawable/ic_logout_white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textView"
@@ -11,9 +104,16 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="@dimen/textview_padding"
-        android:text="Navigation"
+        android:text="@string/app_name"
         android:textColor="@android:color/white"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
 
     <LinearLayout
         android:id="@+id/layout_nav_main"
@@ -29,7 +129,7 @@
             android:layout_marginLeft="16dp"
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_menu_black_24dp"
-            android:drawablePadding="16dp"
+            android:drawablePadding="@dimen/text_drawable_left_padding"
             android:gravity="center_vertical"
             android:padding="@dimen/textview_padding"
             android:text="Main" />
@@ -48,10 +148,29 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:drawableLeft="@drawable/ic_date_range_black_24dp"
-            android:drawablePadding="16dp"
+            android:drawablePadding="@dimen/text_drawable_left_padding"
             android:gravity="center_vertical"
             android:padding="@dimen/textview_padding"
             android:text="Agenda" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_nav_scratch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/text_nav_scratch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:drawableLeft="@drawable/ic_ticket_white_24dp"
+            android:drawablePadding="@dimen/text_drawable_left_padding"
+            android:gravity="center_vertical"
+            android:padding="@dimen/textview_padding"
+            android:text="Scratch Card" />
     </LinearLayout>
 
     <LinearLayout
@@ -67,7 +186,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:drawableLeft="@drawable/ic_account_multiple_white"
-            android:drawablePadding="16dp"
+            android:drawablePadding="@dimen/text_drawable_left_padding"
             android:gravity="center_vertical"
             android:padding="@dimen/textview_padding"
             android:text="Sponsors" />
@@ -86,7 +205,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:drawableLeft="@drawable/ic_info_white_24dp"
-            android:drawablePadding="16dp"
+            android:drawablePadding="@dimen/text_drawable_left_padding"
             android:gravity="center_vertical"
             android:padding="@dimen/textview_padding"
             android:text="About" />

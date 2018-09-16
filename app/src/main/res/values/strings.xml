@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Devfest \'18</string>
+    
+    <!--<string name="default_web_client_id">990907546643-ek9j5nl7j15p8j46ch53cc44oarsegto.apps.googleusercontent.com</string>-->
 
     <!--String arrays for agenda 6th Oct-->
     <string-array name="agenda_6_oct_events">

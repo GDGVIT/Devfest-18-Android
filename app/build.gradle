@@ -20,6 +20,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        android.defaultConfig.vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -93,8 +94,18 @@ dependencies {
     // Firebase Realtime DB
     implementation 'com.google.firebase:firebase-database:16.0.1'
 
+    // Firebase Auth
+    implementation 'com.google.firebase:firebase-auth:16.0.3'
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
+
     // ScratchView
     implementation 'com.github.cooltechworks:ScratchView:v1.1'
+
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // CircleImageview
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

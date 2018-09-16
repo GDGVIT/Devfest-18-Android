@@ -57,6 +57,7 @@ class ScratchFragment : Fragment() {
         sharedpreferences = activity?.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE)
 
         enabledRef.addValueEventListener(object : ValueEventListener {
+
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val isEnabled = dataSnapshot.getValue(Boolean::class.java) ?: true
                 if (isEnabled) {
@@ -75,8 +76,6 @@ class ScratchFragment : Fragment() {
                     scratchCardParentView.visibility = View.GONE
                     afterRevealCardView.visibility = View.GONE
                 }
-
-                Log.v("isEnabled", "" + isEnabled)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -126,5 +125,16 @@ class ScratchFragment : Fragment() {
                 }
             }
         })
+
+//        data class QuizQuestion(
+//                var question: String = "Sample question",
+//                var answer: String = "Sample answer",
+//                var optionList: List<String> = listOf("Sample option 1", "Sample option 2")
+//        )
+//
+//        var classList = listOf(QuizQuestion(), QuizQuestion())
+//
+//        var sampleRef = database.getReference("quiz")
+//        sampleRef.setValue(classList)
     }
 }

@@ -3,7 +3,6 @@ package com.dscvit.android.devfest18.ui
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
 import com.dscvit.android.devfest18.R
 import com.dscvit.android.devfest18.ui.agenda.AgendaFragment
 import com.dscvit.android.devfest18.ui.bottomsheet.NavClickListener
@@ -22,7 +21,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, NavClickLi
 
     override fun supportFragmentInjector()= dispatchingAndroidInjector
 
-    private val naviBottomSheetFragment = NavigationBottomSheetFragment()
+    private val navigationBottomSheetFragment = NavigationBottomSheetFragment()
 
     companion object {
         var selectedFragmentIndex = 0
@@ -39,8 +38,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, NavClickLi
         }
 
         bottom_app_bar.setNavigationOnClickListener {
-            naviBottomSheetFragment.navClickListener = this
-            naviBottomSheetFragment.show(supportFragmentManager, naviBottomSheetFragment.tag)
+            navigationBottomSheetFragment.navClickListener = this
+            navigationBottomSheetFragment.show(supportFragmentManager, navigationBottomSheetFragment.tag)
         }
     }
 
@@ -56,7 +55,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, NavClickLi
     }
 
     override fun onNavItemClicked(index: Int) {
-        naviBottomSheetFragment.dismiss()
+        navigationBottomSheetFragment.dismiss()
         selectedFragmentIndex = index
         updateFragment(index)
     }

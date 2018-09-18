@@ -11,6 +11,8 @@ import com.dscvit.android.devfest18.R
 import com.dscvit.android.devfest18.di.Injectable
 import com.dscvit.android.devfest18.ui.adapter.AgendaAdapter
 import kotlinx.android.synthetic.main.fragment_agenda.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 
 class AgendaFragment : Fragment(), Injectable {
 

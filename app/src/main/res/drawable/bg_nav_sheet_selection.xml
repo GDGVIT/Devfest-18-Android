@@ -9,5 +9,5 @@
         android:top="@dimen/bottom_sheet_padding"
         android:left="@dimen/bottom_sheet_padding"
         android:right="@dimen/bottom_sheet_padding"/>
-    <solid android:color="@color/indigo" />
+    <solid android:color="@color/colorPrimary" />
 </shape>

@@ -8,6 +8,7 @@ import com.dscvit.android.devfest18.ui.agenda.AgendaFragment
 import com.dscvit.android.devfest18.ui.bottomsheet.NavClickListener
 import com.dscvit.android.devfest18.ui.bottomsheet.NavigationBottomSheetFragment
 import com.dscvit.android.devfest18.ui.main.MainFragment
+import com.dscvit.android.devfest18.ui.quiz.QuizFragment
 import com.dscvit.android.devfest18.ui.scratch.ScratchFragment
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, NavClickLi
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
-    override fun supportFragmentInjector()= dispatchingAndroidInjector
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
 
     private val navigationBottomSheetFragment = NavigationBottomSheetFragment()
 
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, NavClickLi
                     0 -> MainFragment.newInstance()
                     1 -> AgendaFragment.newInstance()
                     2 -> ScratchFragment.newInstance()
-                    else -> MainFragment.newInstance()
+                    else -> QuizFragment.newInstance()
                 })
                 .commitNow()
     }

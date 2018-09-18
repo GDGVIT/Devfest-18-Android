@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#ae40ff</color>
+    <color name="colorPrimaryDark">#7838a7</color>
     <color name="colorAccent">#D81B60</color>
 
     <color name="indigo">#4768fd</color>
@@ -20,4 +20,10 @@
     <color name="dark_2">#212121</color>
     <color name="dark_3">#303030</color>
     <color name="dark_4">#424242</color>
+
+    <color name="dark_black">#2c2c2c</color>
+    <color name="purple">#ae40ff</color>
+    <color name="purple_dark">#7838a7</color>
+    <color name="magenta">#6b40ff</color>
+    <color name="magenta_dark">#5037a5</color>
 </resources>

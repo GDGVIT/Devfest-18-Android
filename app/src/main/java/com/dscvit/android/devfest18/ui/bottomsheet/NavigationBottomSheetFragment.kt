@@ -26,6 +26,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.AuthCredential
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
+import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.toast
 
 
@@ -152,13 +153,12 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
 
     private fun updateNavList(index: Int) {
         val bgResourceId = R.drawable.bg_nav_sheet_selection
-        val bgRes = ContextCompat.getDrawable(context!!, bgResourceId)
         when(index) {
-            0 -> text_nav_main.background = bgRes
-            1 -> text_nav_agenda.background = bgRes
-            2 -> text_nav_scratch.background = bgRes
-            3 -> text_nav_sponsors.background = bgRes
-            4 -> text_nav_about.background = bgRes
+            0 -> text_nav_main.backgroundResource = bgResourceId
+            1 -> text_nav_agenda.backgroundResource = bgResourceId
+            2 -> text_nav_scratch.backgroundResource = bgResourceId
+            3 -> text_nav_sponsors.backgroundResource = bgResourceId
+            4 -> text_nav_about.backgroundResource = bgResourceId
         }
     }
 }

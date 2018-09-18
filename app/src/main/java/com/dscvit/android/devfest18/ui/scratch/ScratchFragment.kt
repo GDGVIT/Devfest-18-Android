@@ -1,41 +1,27 @@
 package com.dscvit.android.devfest18.ui.scratch
 
-import androidx.fragment.app.Fragment
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.cooltechworks.views.ScratchTextView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
+import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.cooltechworks.views.ScratchTextView
 import com.dscvit.android.devfest18.R
-import kotlinx.android.synthetic.main.fragment_scratch.*
-import android.R.id.edit
-import com.dscvit.android.devfest18.R.id.scratchView
-import com.google.firebase.database.DatabaseError
+import com.dscvit.android.devfest18.utils.hide
+import com.dscvit.android.devfest18.utils.show
 import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import android.content.Context.MODE_PRIVATE
-import android.util.Log
-import com.dscvit.android.devfest18.R.id.scratchCardParentView
-import com.dscvit.android.devfest18.R.id.keyTextView
-import com.dscvit.android.devfest18.R.id.afterRevealCardView
-import com.dscvit.android.devfest18.R.id.scratchCardParentView
-import com.dscvit.android.devfest18.R.id.keyTextView
-import com.dscvit.android.devfest18.R.id.afterRevealCardView
-
-
-
-
+import kotlinx.android.synthetic.main.fragment_scratch.*
 
 
 class ScratchFragment : Fragment() {
 
-    val MY_PREFS_NAME = "MyPrefsFile"
-    var CouponKey = "couponKey"
+    private val MY_PREFS_NAME = "MyPrefsFile"
+    private var CouponKey = "couponKey"
     var sharedpreferences: SharedPreferences? = null
     private val database = FirebaseDatabase.getInstance()
     private val keyRef = database.getReference("keys")
@@ -51,8 +37,8 @@ class ScratchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        scratchCardParentView.visibility = View.GONE;
-        afterRevealCardView.visibility = View.GONE;
+        scratchCardParentView.hide()
+        afterRevealCardView.hide()
 
         sharedpreferences = activity?.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE)
 
@@ -61,20 +47,20 @@ class ScratchFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val isEnabled = dataSnapshot.getValue(Boolean::class.java) ?: true
                 if (isEnabled) {
-                    placeHolderView.setVisibility(View.GONE)
-                    scratchCardParentView.visibility = View.VISIBLE
+                    placeHolderView.hide()
+                    scratchCardParentView.show()
                     sharedpreferences?.let { sharedPreferences ->
                         if (sharedPreferences.getBoolean("revealed", false)) {
-                            placeHolderView.setVisibility(View.GONE)
-                            afterRevealCardView.visibility = View.VISIBLE
+                            placeHolderView.hide()
+                            afterRevealCardView.show()
                             keyTextView.text = sharedPreferences.getString(CouponKey, "")
-                            scratchCardParentView.visibility = View.GONE
+                            scratchCardParentView.hide()
                         }
                     }
                 } else {
-                    placeHolderView.visibility = View.VISIBLE
-                    scratchCardParentView.visibility = View.GONE
-                    afterRevealCardView.visibility = View.GONE
+                    placeHolderView.show()
+                    scratchCardParentView.hide()
+                    afterRevealCardView.hide()
                 }
             }
 
@@ -93,7 +79,7 @@ class ScratchFragment : Fragment() {
                 keyRef.child(key).setValue(key)
                 keyRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        scratchView?.setText(sharedPreferences.getString(CouponKey, ""))
+                        scratchView?.text = sharedPreferences.getString(CouponKey, "")
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {

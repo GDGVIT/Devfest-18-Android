@@ -13,4 +13,7 @@
     <dimen name="account_image_size">40dp</dimen>
     <dimen name="account_items_margin">24dp</dimen>
 
+    <dimen name="quiz_option_corner_radius">5dp</dimen>
+    <dimen name="quiz_option_padding">16dp</dimen>
+
 </resources>

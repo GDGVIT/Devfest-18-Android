@@ -24,9 +24,9 @@
     </string-array>
     <string-array name="agenda_6_oct_colors">
         <item>yellow</item>
-        <item>teal</item>
-        <item>indigo</item>
-        <item>light_blue</item>
+        <item>green</item>
+        <item>orange</item>
+        <item>blue</item>
     </string-array>
 
     <!--String arrays for agenda 7th Oct-->
@@ -65,14 +65,14 @@
     </string-array>
     <string-array name="agenda_7_oct_colors">
         <item>yellow</item>
-        <item>indigo</item>
+        <item>blue</item>
         <item>orange</item>
-        <item>indigo</item>
-        <item>teal</item>
-        <item>indigo</item>
+        <item>blue</item>
+        <item>green</item>
+        <item>blue</item>
         <item>orange</item>
-        <item>indigo</item>
-        <item>indigo_dark</item>
+        <item>blue</item>
+        <item>yellow</item>
     </string-array>
 
     <string name="fcm_notification_title_template">Fcm: %1$s</string>

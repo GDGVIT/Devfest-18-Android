@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ae40ff</color>
-    <color name="colorPrimaryDark">#7838a7</color>
+    <color name="colorPrimary">#4768fd</color>
+    <color name="colorPrimaryDark">#3c54fe</color>
     <color name="colorAccent">#D81B60</color>
 
     <color name="indigo">#4768fd</color>
@@ -26,4 +26,21 @@
     <color name="purple_dark">#7838a7</color>
     <color name="magenta">#6b40ff</color>
     <color name="magenta_dark">#5037a5</color>
+
+    <!--<color name="teal_100">#B2DFDB</color>-->
+    <color name="blue_100">#BBDEFB</color>
+    <color name="green_100">#C8E6C9</color>
+    <color name="yellow_100">#FFF9C4</color>
+    <color name="orange_100">#FFE0B2</color>
+
+    <color name="blue_200">#90CAF9</color>
+    <color name="green_200">#A5D6A7</color>
+    <color name="yellow_200">#FFF9C4</color>
+    <color name="orange_200">#FFAB91</color>
+
+    <color name="blue_800">#1565C0</color>
+    <color name="green_800">#2E7D32</color>
+    <color name="yellow_800">#F9A825</color>
+    <color name="orange_800">#EF6C00</color>
+
 </resources>

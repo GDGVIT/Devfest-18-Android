@@ -2,6 +2,7 @@ package com.dscvit.android.devfest18.ui.quiz
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,8 @@ class QuizFragment : Fragment() {
 
     private val QUIZ_TIMEOUT: Long = 10000
     private val QUIZ_INTERVAL: Long = 2000
+
+    private val DAY_IN_MILLI: Long = 60*60*24*1000
 
     private val database = FirebaseDatabase.getInstance()
     private val quizRef = database.getReference("quiz")
@@ -51,6 +54,10 @@ class QuizFragment : Fragment() {
         )
 
         hideQuiz()
+
+//        chronometer_quiz_timer.isCountDown = true
+        chronometer_quiz_timer.base = SystemClock.elapsedRealtime() + 30000
+        chronometer_quiz_timer.start()
 
         quizRef.addValueEventListener(object : ValueEventListener {
 

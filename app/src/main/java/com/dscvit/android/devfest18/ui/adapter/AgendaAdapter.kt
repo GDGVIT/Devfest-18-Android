@@ -1,7 +1,9 @@
 package com.dscvit.android.devfest18.ui.adapter
 
+import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.dscvit.android.devfest18.R
 import com.dscvit.android.devfest18.utils.getColourId
@@ -9,8 +11,6 @@ import com.dscvit.android.devfest18.utils.getResId
 import com.dscvit.android.devfest18.utils.inflate
 import kotlinx.android.synthetic.main.item_agenda_dark.view.*
 import kotlinx.android.synthetic.main.item_agenda_light.view.*
-import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.backgroundColorResource
 
 class AgendaAdapter(
         private val events: Array<String>,
@@ -21,12 +21,7 @@ class AgendaAdapter(
 
     private val darkThemeColours = listOf("indigo", "indigo_dark")
 
-    override fun getItemViewType(position: Int)= if (colours[position] in darkThemeColours) 0 else 1
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = if(viewType == 0)
-        AgendaViewHolder(parent.inflate(R.layout.item_agenda_dark))
-     else
-        AgendaViewHolder(parent.inflate(R.layout.item_agenda_light))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = AgendaViewHolder(parent.inflate(R.layout.item_agenda_light))
 
     override fun getItemCount() = events.size
 
@@ -41,16 +36,12 @@ class AgendaAdapter(
 class AgendaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(event: String, timing: String, icon: String, colour: String) = with(itemView) {
-        if (itemViewType == 0) {
-            layout_agenda_dark.setBackgroundColor(colour.getColourId(context))
-            image_agenda_dark_icon.setImageResource(icon.getResId(context))
-            text_agenda_dark_event.text = event
-            text_agenda_dark_timing.text = timing
-        } else {
-            layout_agenda_light.setBackgroundColor(colour.getColourId(context))
-            image_agenda_light_icon.setImageResource(icon.getResId(context))
-            text_agenda_light_event.text = event
-            text_agenda_light_timing.text = timing
-        }
+        val lightColour = colour+"_200"
+        val darkColour = colour+"_800"
+//        layout_agenda_light.setBackgroundColor(lightColour.getColourId(context))
+        image_agenda_light_icon.setImageResource(icon.getResId(context))
+        ImageViewCompat.setImageTintList(image_agenda_light_icon, ColorStateList.valueOf(lightColour.getColourId(context)))
+        text_agenda_light_event.text = event
+        text_agenda_light_timing.text = timing
     }
 }

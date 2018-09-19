@@ -25,6 +25,18 @@ fun String.getColourId(context: Context) = when(this) {
     "indigo" -> context.resources.getColor(R.color.indigo)
     "light_blue" -> context.resources.getColor(R.color.light_blue)
     "orange" -> context.resources.getColor(R.color.orange)
+    "yellow_100" -> context.resources.getColor(R.color.yellow_100)
+    "green_100" -> context.resources.getColor(R.color.green_100)
+    "orange_100" -> context.resources.getColor(R.color.orange_100)
+    "blue_100" -> context.resources.getColor(R.color.blue_100)
+    "yellow_200" -> context.resources.getColor(R.color.yellow_200)
+    "green_200" -> context.resources.getColor(R.color.green_200)
+    "orange_200" -> context.resources.getColor(R.color.orange_200)
+    "blue_200" -> context.resources.getColor(R.color.blue_200)
+    "yellow_800" -> context.resources.getColor(R.color.yellow_800)
+    "green_800" -> context.resources.getColor(R.color.green_800)
+    "orange_800" -> context.resources.getColor(R.color.orange_800)
+    "blue_800" -> context.resources.getColor(R.color.blue_800)
     else -> context.resources.getColor(R.color.indigo_dark)
 }
 

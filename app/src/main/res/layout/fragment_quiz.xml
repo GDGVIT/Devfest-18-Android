@@ -30,6 +30,16 @@
         android:orientation="vertical"
         android:visibility="visible">
 
+        <Chronometer
+            android:id="@+id/chronometer_quiz_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/text_quiz_question"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/text_quiz_question"
             android:layout_width="match_parent"
@@ -44,7 +54,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chronometer_quiz_timer"
             tools:text="Make something retire instatnly i'm chopping don't call me michael mayer son my vicitnity Make something retire instatnly i'm chopping don't call me michael mayer son my vicitnity" />
 
         <LinearLayout

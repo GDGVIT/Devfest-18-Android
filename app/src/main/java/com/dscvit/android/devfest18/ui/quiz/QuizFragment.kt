@@ -1,5 +1,7 @@
 package com.dscvit.android.devfest18.ui.quiz
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
@@ -12,6 +14,7 @@ import com.dscvit.android.devfest18.R
 import com.dscvit.android.devfest18.model.Quiz
 import com.dscvit.android.devfest18.model.QuizQuestion
 import com.dscvit.android.devfest18.utils.*
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -24,14 +27,32 @@ class QuizFragment : Fragment() {
     private val QUIZ_TIMEOUT: Long = 10000
     private val QUIZ_INTERVAL: Long = 2000
 
-    private val DAY_IN_MILLI: Long = 60*60*24*1000
-
+    private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val database = FirebaseDatabase.getInstance()
     private val quizRef = database.getReference("quiz")
+
+    private val listener = object : ValueEventListener {
+
+        override fun onCancelled(databaseError: DatabaseError) {
+
+        }
+
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val quiz = dataSnapshot.getValue(Quiz::class.java)
+            if (quiz != null && quiz.quizEnabled) {
+                startQuiz(quiz)
+            } else {
+                hideQuiz()
+            }
+        }
+    }
+
+    var sharedPreferences: SharedPreferences? = null
 
     private var quiz = Quiz()
     private var clickedOptionPosition = -1
     private var questionIndex = 0
+    private var isQuizCompleted = false
 
     private lateinit var textViewList: List<TextView>
 
@@ -46,6 +67,8 @@ class QuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sharedPreferences = activity?.getSharedPreferences(Constants.PREF_KEY, Context.MODE_PRIVATE)
+
         textViewList = listOf(
                 text_quiz_option_1,
                 text_quiz_option_2,
@@ -53,29 +76,25 @@ class QuizFragment : Fragment() {
                 text_quiz_option_4
         )
 
-        hideQuiz()
-
-//        chronometer_quiz_timer.isCountDown = true
-        chronometer_quiz_timer.base = SystemClock.elapsedRealtime() + 30000
-        chronometer_quiz_timer.start()
-
-        quizRef.addValueEventListener(object : ValueEventListener {
-
-            override fun onCancelled(databaseError: DatabaseError) {
+//        hideQuiz()
+        //TODO: Check user auth
+        mAuth.addAuthStateListener {
+            it.currentUser?.let {
+                context?.toast(it.displayName.toString())
+            } ?: run {
 
             }
+        }
 
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val quiz = dataSnapshot.getValue(Quiz::class.java)
-                quiz?.let { quiz ->
-                    if (quiz.quizEnabled) {
-                        startQuiz(quiz)
-                    } else {
-                        hideQuiz()
-                    }
-                }
-            }
-        })
+        isQuizCompleted = sharedPreferences?.getBoolean(Constants.PREF_QUIZ_COMPLETEED, false) ?: false
+
+        if (isQuizCompleted) {
+            //TODO show completed layout
+            completeQuiz()
+        } else {
+            hideQuiz()
+            quizRef.addValueEventListener(listener)
+        }
     }
 
     private fun startQuiz(quiz: Quiz) {
@@ -96,6 +115,7 @@ class QuizFragment : Fragment() {
         } else {
             context?.toast("Quiz completed")
             //TODO: Show quiz completed page
+            completeQuiz()
         }
     }
 
@@ -159,6 +179,7 @@ class QuizFragment : Fragment() {
 
     private fun showQuiz() {
         layout_quiz_placeholder?.hide()
+        layout_quiz_completed?.hide()
         layout_quiz?.show()
         resetOptions()
     }
@@ -166,6 +187,15 @@ class QuizFragment : Fragment() {
     private fun hideQuiz() {
         layout_quiz_placeholder?.show()
         layout_quiz?.hide()
+        layout_quiz_completed?.hide()
+    }
+
+    private fun completeQuiz() {
+        quizRef.removeEventListener(listener)
+        layout_quiz_placeholder?.hide()
+        layout_quiz?.hide()
+        layout_quiz_completed?.show()
+        sharedPreferences?.edit()?.putBoolean(Constants.PREF_QUIZ_COMPLETEED, true)?.apply()
     }
 
     private fun updateQuestion(quizQuestion: QuizQuestion) {

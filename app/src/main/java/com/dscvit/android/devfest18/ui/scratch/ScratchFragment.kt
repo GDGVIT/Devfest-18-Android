@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.cooltechworks.views.ScratchTextView
 import com.dscvit.android.devfest18.R
+import com.dscvit.android.devfest18.utils.Constants
 import com.dscvit.android.devfest18.utils.hide
 import com.dscvit.android.devfest18.utils.show
 import com.google.firebase.database.DataSnapshot
@@ -20,8 +21,6 @@ import kotlinx.android.synthetic.main.fragment_scratch.*
 
 class ScratchFragment : Fragment() {
 
-    private val MY_PREFS_NAME = "MyPrefsFile"
-    private var CouponKey = "couponKey"
     var sharedpreferences: SharedPreferences? = null
     private val database = FirebaseDatabase.getInstance()
     private val keyRef = database.getReference("keys")
@@ -40,46 +39,53 @@ class ScratchFragment : Fragment() {
         scratchCardParentView.hide()
         afterRevealCardView.hide()
 
-        sharedpreferences = activity?.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE)
-
-        enabledRef.addValueEventListener(object : ValueEventListener {
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val isEnabled = dataSnapshot.getValue(Boolean::class.java) ?: true
-                if (isEnabled) {
-                    placeHolderView.hide()
-                    scratchCardParentView.show()
-                    sharedpreferences?.let { sharedPreferences ->
-                        if (sharedPreferences.getBoolean("revealed", false)) {
-                            placeHolderView.hide()
-                            afterRevealCardView.show()
-                            keyTextView.text = sharedPreferences.getString(CouponKey, "")
-                            scratchCardParentView.hide()
-                        }
-                    }
-                } else {
-                    placeHolderView.show()
-                    scratchCardParentView.hide()
-                    afterRevealCardView.hide()
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        })
+        sharedpreferences = activity?.getSharedPreferences(Constants.PREF_KEY, MODE_PRIVATE)
 
         sharedpreferences?.let { sharedPreferences ->
 
-            if (sharedPreferences.contains(CouponKey)) {
-                scratchView?.text = sharedPreferences.getString(CouponKey, "")
+            if (sharedPreferences.getBoolean("revealed", false)) {
+                placeHolderView.hide()
+                afterRevealCardView.show()
+                keyTextView?.text = sharedPreferences.getString(Constants.PREF_COUPON, "")
+            } else {
+                enabledRef.addValueEventListener(object : ValueEventListener {
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val isEnabled = dataSnapshot.getValue(Boolean::class.java) ?: true
+                        if (isEnabled) {
+                            placeHolderView.hide()
+                            scratchCardParentView.show()
+                            sharedpreferences?.let { sharedPreferences ->
+                                if (sharedPreferences.getBoolean("revealed", false)) {
+                                    placeHolderView.hide()
+                                    afterRevealCardView.show()
+                                    keyTextView.text = sharedPreferences.getString(Constants.PREF_COUPON, "")
+                                    scratchCardParentView.hide()
+                                }
+                            }
+                        } else {
+                            placeHolderView.show()
+                            scratchCardParentView.hide()
+                            afterRevealCardView.hide()
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+
+                    }
+                })
+            }
+
+            if (sharedPreferences.contains(Constants.PREF_COUPON)) {
+                scratchView?.text = sharedPreferences.getString(Constants.PREF_COUPON, "")
             } else {
                 var key: String = keyRef.push().key!!//key to be taken from Firebase
                 key = key.substring(key.length - 8, key.length)
                 keyRef.child(key).setValue(key)
                 keyRef.addValueEventListener(object : ValueEventListener {
+
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        scratchView?.text = sharedPreferences.getString(CouponKey, "")
+                        scratchView?.text = sharedPreferences.getString(Constants.PREF_COUPON, "")
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
@@ -88,7 +94,7 @@ class ScratchFragment : Fragment() {
                 })
 
                 with(sharedPreferences.edit()) {
-                    putString(CouponKey, key)
+                    putString(Constants.PREF_COUPON, key)
                     apply()
                 }
             }

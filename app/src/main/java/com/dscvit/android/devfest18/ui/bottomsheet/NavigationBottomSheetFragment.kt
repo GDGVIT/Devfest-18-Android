@@ -34,7 +34,7 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
 
     private val RC_SIGN_IN = 9001
 
-    private lateinit var mAuth: FirebaseAuth
+    private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
     var navClickListener: NavClickListener? = null
@@ -52,7 +52,7 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
 
         context?.let { mGoogleSignInClient = GoogleSignIn.getClient(it, gso) }
 
-        mAuth = FirebaseAuth.getInstance()
+//        mAuth = FirebaseAuth.getInstance()
 
         updateAccountUI(mAuth.currentUser)
 

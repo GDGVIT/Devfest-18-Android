@@ -152,7 +152,7 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
     }
 
     private fun updateNavList(index: Int) {
-        val bgResourceId = R.drawable.bg_nav_sheet_selection
+        val bgResourceId = R.drawable.bg_nav_sheet_selection_gradient
         when(index) {
             0 -> text_nav_main.backgroundResource = bgResourceId
             1 -> text_nav_agenda.backgroundResource = bgResourceId

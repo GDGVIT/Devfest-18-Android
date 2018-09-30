@@ -1,8 +1,12 @@
 package com.dscvit.android.devfest18.ui
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.MotionEvent
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MotionEventCompat
 import com.dscvit.android.devfest18.R
 import com.dscvit.android.devfest18.ui.agenda.AgendaFragment
 import com.dscvit.android.devfest18.ui.bottomsheet.NavClickListener
@@ -12,7 +16,8 @@ import com.dscvit.android.devfest18.ui.quiz.QuizFragment
 import com.dscvit.android.devfest18.ui.scratch.ScratchFragment
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import kotlinx.android.synthetic.main.main_activity.*
+import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.act
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, NavClickListener {
@@ -25,23 +30,40 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, NavClickLi
     private val navigationBottomSheetFragment = NavigationBottomSheetFragment()
 
     companion object {
-        var selectedFragmentIndex = 0
+        var selectedFragmentIndex = 1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
+        setContentView(R.layout.activity_main)
 
-//        setSupportActionBar(bottom_app_bar)
+        setSupportActionBar(bottom_app_bar)
+
+        bottom_app_bar.title = "Bleh"
 
         if (savedInstanceState == null) {
             updateFragment(selectedFragmentIndex)
         }
 
         bottom_app_bar.setNavigationOnClickListener {
-            navigationBottomSheetFragment.navClickListener = this
-            navigationBottomSheetFragment.show(supportFragmentManager, navigationBottomSheetFragment.tag)
+            showBottomSheet()
         }
+
+        bottom_app_bar.setOnTouchListener { _, event ->
+            val action: Int = MotionEventCompat.getActionMasked(event)
+            when(action) {
+                MotionEvent.ACTION_UP -> {
+                    showBottomSheet()
+                    return@setOnTouchListener true
+                }
+                else -> super.onTouchEvent(event)
+            }
+        }
+    }
+
+    private fun showBottomSheet() {
+        navigationBottomSheetFragment.navClickListener = this
+        navigationBottomSheetFragment.show(supportFragmentManager, navigationBottomSheetFragment.tag)
     }
 
     private fun updateFragment(index: Int) {

@@ -8,7 +8,7 @@ tools:context=".ui.MainActivity">
 
     <FrameLayout
         android:id="@+id/container"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
         app:layout_constraintEnd_toEndOf="parent"

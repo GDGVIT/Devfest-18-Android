@@ -64,9 +64,9 @@ class ScratchFragment : Fragment() {
                                 }
                             }
                         } else {
-                            placeHolderView.show()
-                            scratchCardParentView.hide()
-                            afterRevealCardView.hide()
+                            placeHolderView?.show()
+                            scratchCardParentView?.hide()
+                            afterRevealCardView?.hide()
                         }
                     }
 

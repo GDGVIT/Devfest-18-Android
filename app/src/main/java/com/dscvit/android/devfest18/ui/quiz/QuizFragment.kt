@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +14,9 @@ import com.dscvit.android.devfest18.model.Quiz
 import com.dscvit.android.devfest18.model.QuizQuestion
 import com.dscvit.android.devfest18.utils.*
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_bottom_sheet_navigation.*
 import kotlinx.android.synthetic.main.fragment_quiz.*
 import org.jetbrains.anko.toast
 
@@ -30,8 +28,10 @@ class QuizFragment : Fragment() {
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val database = FirebaseDatabase.getInstance()
     private val quizRef = database.getReference("quiz")
+    private var firebaseUser: FirebaseUser? = null
+    private var userRef = database.getReference("users")
 
-    private val listener = object : ValueEventListener {
+    private val quizListener = object : ValueEventListener {
 
         override fun onCancelled(databaseError: DatabaseError) {
 
@@ -39,20 +39,49 @@ class QuizFragment : Fragment() {
 
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val quiz = dataSnapshot.getValue(Quiz::class.java)
-            if (quiz != null && quiz.quizEnabled) {
-                startQuiz(quiz)
-            } else {
-                hideQuiz()
+            quiz?.let {
+                when(it.quizEnabled.toInt()) {
+                    0 -> hideQuiz()
+                    1 -> startQuiz(it)
+                    2 -> completeQuiz()
+                }
             }
         }
     }
 
-    var sharedPreferences: SharedPreferences? = null
+    private val authListener = FirebaseAuth.AuthStateListener { authListener ->
+        authListener.currentUser?.let {
+            firebaseUser = it
+            userRef.child(firebaseUser!!.uid).addValueEventListener(userListener)
+        } ?: run {
+            showNotAuth()
+        }
+    }
+
+    private val userListener = object : ValueEventListener {
+        override fun onCancelled(p0: DatabaseError) {
+
+        }
+
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.hasChild("score")) {
+                //FIXME: This is causing error because if score is updated during quiz this ends the quiz
+                val dbScore: Long = dataSnapshot.child("score").getValue(Long::class.java)!!
+                score = dbScore.toInt()
+                completeQuiz()
+            } else {
+                quizRef.addValueEventListener(quizListener)
+            }
+        }
+    }
+
+    private var sharedPreferences: SharedPreferences? = null
 
     private var quiz = Quiz()
     private var clickedOptionPosition = -1
     private var questionIndex = 0
     private var isQuizCompleted = false
+    private var score = 0
 
     private lateinit var textViewList: List<TextView>
 
@@ -60,9 +89,8 @@ class QuizFragment : Fragment() {
         fun newInstance() = QuizFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_quiz, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+            = inflater.inflate(R.layout.fragment_quiz, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,27 +105,27 @@ class QuizFragment : Fragment() {
         )
 
 //        hideQuiz()
-        //TODO: Check user auth
-        mAuth.addAuthStateListener {
-            it.currentUser?.let {
-                context?.toast(it.displayName.toString())
-            } ?: run {
 
-            }
-        }
-
-        isQuizCompleted = sharedPreferences?.getBoolean(Constants.PREF_QUIZ_COMPLETEED, false) ?: false
+        isQuizCompleted = sharedPreferences?.getBoolean(Constants.PREF_QUIZ_COMPLETED, false) ?: false
+        score = sharedPreferences?.getInt(Constants.PREF_QUIZ_SCORE, 0) ?: 0
 
         if (isQuizCompleted) {
-            //TODO show completed layout
             completeQuiz()
         } else {
-            hideQuiz()
-            quizRef.addValueEventListener(listener)
+//            hideQuiz()
+            mAuth.addAuthStateListener(authListener)
         }
     }
 
+    private fun showNotAuth() {
+        context?.toast("Not authorised")
+        hideAll()
+        layout_quiz_not_auth?.show()
+    }
+
     private fun startQuiz(quiz: Quiz) {
+        userRef.child(firebaseUser!!.uid).removeEventListener(userListener)
+        updateScore()
         this.quiz = quiz
         showQuiz()
         startTimer()
@@ -114,7 +142,6 @@ class QuizFragment : Fragment() {
             }, QUIZ_TIMEOUT)
         } else {
             context?.toast("Quiz completed")
-            //TODO: Show quiz completed page
             completeQuiz()
         }
     }
@@ -122,9 +149,13 @@ class QuizFragment : Fragment() {
     private fun stopTimer() {
         showAnswer()
         Handler().postDelayed({
-            questionIndex += 1
-            resetOptions()
-            startTimer()
+            if (getCurrentAnsIndex() != clickedOptionPosition) {
+                completeQuiz()
+            } else {
+                questionIndex += 1
+                resetOptions()
+                startTimer()
+            }
         }, QUIZ_INTERVAL)
     }
 
@@ -139,6 +170,10 @@ class QuizFragment : Fragment() {
         if (clickedOptionPosition != -1 && currAnsIndex != clickedOptionPosition) {
             textViewList[clickedOptionPosition]?.setWrongIndication()
         }
+        if (currAnsIndex == clickedOptionPosition) {
+            score++
+            updateScore()
+        }
     }
 
     private fun removeClickListeners() {
@@ -148,25 +183,33 @@ class QuizFragment : Fragment() {
     }
 
     private fun setClickListeners() {
-        text_quiz_option_1?.setOnClickListener {
-            resetOptions()
-            clickedOptionPosition = 0
-            text_quiz_option_1.setQuizOptionSelected()
-        }
-        text_quiz_option_2?.setOnClickListener {
-            resetOptions()
-            clickedOptionPosition = 1
-            text_quiz_option_2.setQuizOptionSelected()
-        }
-        text_quiz_option_3?.setOnClickListener {
-            resetOptions()
-            clickedOptionPosition = 2
-            text_quiz_option_3.setQuizOptionSelected()
-        }
-        text_quiz_option_4?.setOnClickListener {
-            resetOptions()
-            clickedOptionPosition = 3
-            text_quiz_option_4.setQuizOptionSelected()
+//        text_quiz_option_1?.setOnClickListener {
+//            resetOptions()
+//            clickedOptionPosition = 0
+//            text_quiz_option_1.setQuizOptionSelected()
+//        }
+//        text_quiz_option_2?.setOnClickListener {
+//            resetOptions()
+//            clickedOptionPosition = 1
+//            text_quiz_option_2.setQuizOptionSelected()
+//        }
+//        text_quiz_option_3?.setOnClickListener {
+//            resetOptions()
+//            clickedOptionPosition = 2
+//            text_quiz_option_3.setQuizOptionSelected()
+//        }
+//        text_quiz_option_4?.setOnClickListener {
+//            resetOptions()
+//            clickedOptionPosition = 3
+//            text_quiz_option_4.setQuizOptionSelected()
+//        }
+
+        for (i in 0 until textViewList.size) {
+            textViewList[i].setOnClickListener {
+                resetOptions()
+                clickedOptionPosition = i
+                textViewList[i].setQuizOptionSelected()
+            }
         }
     }
 
@@ -178,24 +221,38 @@ class QuizFragment : Fragment() {
     }
 
     private fun showQuiz() {
-        layout_quiz_placeholder?.hide()
-        layout_quiz_completed?.hide()
+        hideAll()
         layout_quiz?.show()
         resetOptions()
     }
 
     private fun hideQuiz() {
+        hideAll()
         layout_quiz_placeholder?.show()
-        layout_quiz?.hide()
-        layout_quiz_completed?.hide()
     }
 
     private fun completeQuiz() {
-        quizRef.removeEventListener(listener)
+        quizRef.removeEventListener(quizListener)
+        mAuth.removeAuthStateListener(authListener)
+        hideAll()
+        sharedPreferences?.edit()?.putBoolean(Constants.PREF_QUIZ_COMPLETED, true)?.apply()
+        quiz.quizList = listOf()
+        layout_quiz_completed?.show()
+        text_quiz_score_final?.text = "You scored $score"
+    }
+
+    private fun hideAll() {
         layout_quiz_placeholder?.hide()
         layout_quiz?.hide()
-        layout_quiz_completed?.show()
-        sharedPreferences?.edit()?.putBoolean(Constants.PREF_QUIZ_COMPLETEED, true)?.apply()
+        layout_quiz_completed?.hide()
+        layout_quiz_not_auth?.hide()
+    }
+
+    private fun updateScore() {
+        //TODO: implement this to update view also
+        text_quiz_score_live?.text = "SCORE $score"
+        sharedPreferences?.edit()?.putInt(Constants.PREF_QUIZ_SCORE, score)?.apply()
+        userRef.child(firebaseUser?.uid ?: "").child("score").setValue(score)
     }
 
     private fun updateQuestion(quizQuestion: QuizQuestion) {

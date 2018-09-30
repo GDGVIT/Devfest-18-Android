@@ -9,6 +9,7 @@ import com.dscvit.android.devfest18.R
 import com.dscvit.android.devfest18.utils.getColourId
 import com.dscvit.android.devfest18.utils.getResId
 import com.dscvit.android.devfest18.utils.inflate
+import com.dscvit.android.devfest18.utils.show
 import kotlinx.android.synthetic.main.item_agenda_dark.view.*
 import kotlinx.android.synthetic.main.item_agenda_light.view.*
 
@@ -39,8 +40,10 @@ class AgendaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val lightColour = colour+"_200"
         val darkColour = colour+"_800"
 //        layout_agenda_light.setBackgroundColor(lightColour.getColourId(context))
+//        layout_agenda_light.setCardBackgroundColor(colour.getColourId(context))
         image_agenda_light_icon.setImageResource(icon.getResId(context))
-        ImageViewCompat.setImageTintList(image_agenda_light_icon, ColorStateList.valueOf(lightColour.getColourId(context)))
+//        ImageViewCompat.setImageTintList(image_agenda_light_icon, ColorStateList.valueOf(lightColour.getColourId(context)))
+//        text_agenda_light_event.setTextColor(lightColour.getColourId(context))
         text_agenda_light_event.text = event
         text_agenda_light_timing.text = timing
     }

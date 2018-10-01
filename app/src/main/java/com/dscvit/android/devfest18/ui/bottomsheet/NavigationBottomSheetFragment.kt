@@ -67,7 +67,7 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account)
@@ -79,16 +79,13 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
     }
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
-//        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id)
 
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         mAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-//                Log.d(TAG, "signInWithCredential:success")
                 val user = mAuth.currentUser
                 updateAccountUI(user)
             } else {
-//                Log.w(TAG, "signInWithCredential:failure", task.exception)
                 context?.toast("Login failed")
                 updateAccountUI(null)
             }

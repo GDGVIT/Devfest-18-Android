@@ -1,9 +1,11 @@
 package com.dscvit.android.devfest18.ui.quiz
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +15,14 @@ import com.dscvit.android.devfest18.R
 import com.dscvit.android.devfest18.model.Quiz
 import com.dscvit.android.devfest18.model.QuizQuestion
 import com.dscvit.android.devfest18.utils.*
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_bottom_sheet_navigation.*
 import kotlinx.android.synthetic.main.fragment_quiz.*
@@ -22,14 +30,27 @@ import org.jetbrains.anko.toast
 
 class QuizFragment : Fragment() {
 
+    private val RC_SIGN_IN = 9001
+
     private val QUIZ_TIMEOUT: Long = 10000
     private val QUIZ_INTERVAL: Long = 2000
 
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
     private val database = FirebaseDatabase.getInstance()
     private val quizRef = database.getReference("quiz")
     private var firebaseUser: FirebaseUser? = null
     private var userRef = database.getReference("users")
+
+    private var sharedPreferences: SharedPreferences? = null
+
+    private var quiz = Quiz()
+    private var clickedOptionPosition = -1
+    private var questionIndex = 0
+    private var isQuizCompleted = false
+    private var score = 0
+
+    private lateinit var textViewList: List<TextView>
 
     private val quizListener = object : ValueEventListener {
 
@@ -75,16 +96,6 @@ class QuizFragment : Fragment() {
         }
     }
 
-    private var sharedPreferences: SharedPreferences? = null
-
-    private var quiz = Quiz()
-    private var clickedOptionPosition = -1
-    private var questionIndex = 0
-    private var isQuizCompleted = false
-    private var score = 0
-
-    private lateinit var textViewList: List<TextView>
-
     companion object {
         fun newInstance() = QuizFragment()
     }
@@ -114,6 +125,15 @@ class QuizFragment : Fragment() {
         } else {
 //            hideQuiz()
             mAuth.addAuthStateListener(authListener)
+
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build()
+
+            context?.let { mGoogleSignInClient = GoogleSignIn.getClient(it, gso) }
+
+            quiz_sign_in_button.setOnClickListener { signIn() }
         }
     }
 
@@ -183,27 +203,6 @@ class QuizFragment : Fragment() {
     }
 
     private fun setClickListeners() {
-//        text_quiz_option_1?.setOnClickListener {
-//            resetOptions()
-//            clickedOptionPosition = 0
-//            text_quiz_option_1.setQuizOptionSelected()
-//        }
-//        text_quiz_option_2?.setOnClickListener {
-//            resetOptions()
-//            clickedOptionPosition = 1
-//            text_quiz_option_2.setQuizOptionSelected()
-//        }
-//        text_quiz_option_3?.setOnClickListener {
-//            resetOptions()
-//            clickedOptionPosition = 2
-//            text_quiz_option_3.setQuizOptionSelected()
-//        }
-//        text_quiz_option_4?.setOnClickListener {
-//            resetOptions()
-//            clickedOptionPosition = 3
-//            text_quiz_option_4.setQuizOptionSelected()
-//        }
-
         for (i in 0 until textViewList.size) {
             textViewList[i].setOnClickListener {
                 resetOptions()
@@ -259,6 +258,37 @@ class QuizFragment : Fragment() {
         text_quiz_question?.text = quizQuestion.question
         for (i in 0 until textViewList.size) {
             textViewList[i]?.text = quizQuestion.optionList[i]
+        }
+    }
+
+    private fun signIn() {
+        val signInIntent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account)
+            } catch (e: ApiException) {
+                context?.toast("Google sign in failed")
+            }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        mAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                firebaseUser = mAuth.currentUser
+            } else {
+                context?.toast("Login failed")
+            }
         }
     }
 }

@@ -1,9 +1,11 @@
 package com.dscvit.android.devfest18.ui.quiz
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
@@ -26,6 +28,8 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_bottom_sheet_navigation.*
 import kotlinx.android.synthetic.main.fragment_quiz.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.toast
 
 class QuizFragment : Fragment() {
@@ -49,6 +53,7 @@ class QuizFragment : Fragment() {
     private var questionIndex = 0
     private var isQuizCompleted = false
     private var score = 0
+    private var mCountDownTimer: CountDownTimer? = null
 
     private lateinit var textViewList: List<TextView>
 
@@ -120,6 +125,7 @@ class QuizFragment : Fragment() {
         isQuizCompleted = sharedPreferences?.getBoolean(Constants.PREF_QUIZ_COMPLETED, false) ?: false
         score = sharedPreferences?.getInt(Constants.PREF_QUIZ_SCORE, 0) ?: 0
 
+        //TODO: toggle '&& false'
         if (isQuizCompleted) {
             completeQuiz()
         } else {
@@ -154,12 +160,32 @@ class QuizFragment : Fragment() {
     private fun startTimer() {
         clickedOptionPosition = -1
         if (questionIndex < quiz.quizList.size) {
+
             updateQuestion(quiz.quizList[questionIndex])
             setClickListeners()
-            Handler().postDelayed({
-                removeClickListeners()
-                stopTimer()
-            }, QUIZ_TIMEOUT)
+
+//            Handler().postDelayed({
+//                progersssbar_quiz_timer.progress = progersssbar_quiz_timer.max
+//                removeClickListeners()
+//                stopTimer()
+//            }, QUIZ_TIMEOUT)
+
+            progersssbar_quiz_timer.progress = 0
+
+            mCountDownTimer = object : CountDownTimer(QUIZ_TIMEOUT + 1000, 50) {
+
+                override fun onTick(millisUntilFinished: Long) {
+                    progersssbar_quiz_timer.incrementProgressBy(1)
+                }
+
+                override fun onFinish() {
+                    progersssbar_quiz_timer.progress = progersssbar_quiz_timer.max
+                    removeClickListeners()
+                    stopTimer()
+                }
+            }
+
+            mCountDownTimer?.start()
         } else {
             context?.toast("Quiz completed")
             completeQuiz()

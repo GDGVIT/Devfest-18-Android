@@ -94,4 +94,15 @@
     <string-array name="navigation_icons">
         <item></item>
     </string-array>
+
+    <string name="title_1">About Us</string>
+    <string name="text_1">Google Developer Group, VIT Vellore is a non-profit developers group to learn, share and know more about Google technologies. Our events are open to newbies, developers, managers and organizations who are interested in Google\'s technologies or use them as part of their projects.</string>
+    <string name="title_2">Tech Talks</string>
+    <string name="text_2">Google talks are a grassroots-style series of presentation given by various technical experts spanning a wide spectrum of topics in technology and related areas.</string>
+    <string name="title_3">DEV Fests</string>
+    <string name="text_3">GDG Dev Fests are large scale,community-run events that offer speaker sessions across multiple product areas , hack-a-thons , code labs and many more.</string>
+    <string name="title_4">Code School</string>
+    <string name="text_4">Google code school teaches web technologies in the comfort of your browser through video lessons , coding challenges and screencasts.</string>
+    <string name="title_5">Beta Testing</string>
+    <string name="text_5">Beta Testing is the essence of developing a software. We test every aspect of our product before releasing it for the real-world exposure.</string>
 </resources>

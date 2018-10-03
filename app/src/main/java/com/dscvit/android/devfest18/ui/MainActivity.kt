@@ -1,5 +1,6 @@
 package com.dscvit.android.devfest18.ui
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,7 @@ import com.dscvit.android.devfest18.ui.quiz.QuizFragment
 import com.dscvit.android.devfest18.ui.scratch.ScratchFragment
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.act
 import javax.inject.Inject
@@ -32,6 +34,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, NavClickLi
 
     companion object {
         var selectedFragmentIndex = 1
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        newBase?.let { super.attachBaseContext(ViewPumpContextWrapper.wrap(it)) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +79,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, NavClickLi
                     0 -> MainFragment.newInstance()
                     1 -> AgendaFragment.newInstance()
                     2 -> ScratchFragment.newInstance()
-                    else -> AboutFragment.newInstance()
+                    3 -> QuizFragment.newInstance()
+                    4 -> AboutFragment.newInstance()
+                    else -> MainFragment.newInstance()
                 })
                 .commitNow()
     }

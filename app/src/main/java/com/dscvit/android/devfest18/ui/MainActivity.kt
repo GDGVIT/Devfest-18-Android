@@ -13,6 +13,7 @@ import com.dscvit.android.devfest18.ui.agenda.AgendaFragment
 import com.dscvit.android.devfest18.ui.bottomsheet.NavClickListener
 import com.dscvit.android.devfest18.ui.bottomsheet.NavigationBottomSheetFragment
 import com.dscvit.android.devfest18.ui.info.about.AboutFragment
+import com.dscvit.android.devfest18.ui.info.sponsors.SponsorFragment
 import com.dscvit.android.devfest18.ui.main.MainFragment
 import com.dscvit.android.devfest18.ui.quiz.QuizFragment
 import com.dscvit.android.devfest18.ui.scratch.ScratchFragment
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, NavClickLi
                     1 -> AgendaFragment.newInstance()
                     2 -> ScratchFragment.newInstance()
                     3 -> QuizFragment.newInstance()
-                    4 -> AboutFragment.newInstance()
+                    4 -> SponsorFragment.newInstance()
                     else -> MainFragment.newInstance()
                 })
                 .commitNow()

@@ -13,12 +13,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.squareup.picasso.Picasso
 import com.google.android.gms.tasks.Task
 import androidx.annotation.NonNull
 import com.google.android.gms.tasks.OnCompleteListener
 import android.content.Intent
 import android.util.Log
+import com.bumptech.glide.Glide
 import org.jetbrains.anko.imageResource
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.AuthResult
@@ -110,7 +110,7 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
             layout_nav_before_auth.visibility = View.GONE
             layout_nav_after_auth.visibility = View.VISIBLE
 
-            Picasso.get().load(user.photoUrl).into(image_account)
+            Glide.with(requireContext()).load(user.photoUrl).into(image_account)
             text_account_username.text = user.displayName
             text_account_email.text = user.email
         } ?: run {

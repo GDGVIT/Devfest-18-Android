@@ -1,4 +1,4 @@
-package com.dscvit.android.devfest18.ui.info.about
+package com.dscvit.android.devfest18.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,9 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.viewpager.widget.PagerAdapter
 import com.dscvit.android.devfest18.R
-import com.dscvit.android.devfest18.ui.info.about.CardAdapter.Companion.MAX_ELEVATION_FACTOR
+import com.dscvit.android.devfest18.model.CardItem
+import com.dscvit.android.devfest18.ui.adapter.CardAdapter
+import com.dscvit.android.devfest18.ui.adapter.CardAdapter.Companion.MAX_ELEVATION_FACTOR
 import java.util.ArrayList
 
 class CardPagerAdapter : PagerAdapter(), CardAdapter {

@@ -1,4 +1,4 @@
-package com.dscvit.android.devfest18.ui.info.about
+package com.dscvit.android.devfest18.ui.adapter
 
 
 import androidx.cardview.widget.CardView

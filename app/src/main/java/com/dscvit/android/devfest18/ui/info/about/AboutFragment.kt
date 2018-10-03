@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.dscvit.android.devfest18.R
+import com.dscvit.android.devfest18.model.CardItem
+import com.dscvit.android.devfest18.ui.adapter.CardPagerAdapter
+import com.dscvit.android.devfest18.utils.ui.ShadowTransformer
 import kotlinx.android.synthetic.main.fragment_about.*
 
 class AboutFragment : Fragment() {

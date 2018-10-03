@@ -1,4 +1,4 @@
-package com.dscvit.android.devfest18.utils
+package com.dscvit.android.devfest18.utils.ui
 
 import android.widget.ProgressBar
 import android.view.animation.Animation

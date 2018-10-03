@@ -144,7 +144,7 @@ class QuizFragment : Fragment() {
     }
 
     private fun showNotAuth() {
-        context?.toast("Not authorised")
+//        context?.toast("Not authorised")
         hideAll()
         layout_quiz_not_auth?.show()
     }
@@ -187,7 +187,7 @@ class QuizFragment : Fragment() {
 
             mCountDownTimer?.start()
         } else {
-            context?.toast("Quiz completed")
+//            context?.toast("Quiz completed")
             completeQuiz()
         }
     }

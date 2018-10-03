@@ -25,6 +25,7 @@
 
         <TextView
             android:id="@+id/text_agenda_light_event"
+            fontPath="fonts/GoogleSans-Bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -33,6 +34,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/image_agenda_light_icon"
             app:layout_constraintStart_toEndOf="@+id/image_agenda_light_icon"
             app:layout_constraintTop_toTopOf="@+id/image_agenda_light_icon"
+            tools:ignore="MissingPrefix"
             tools:text="Speaker session" />
 
         <TextView

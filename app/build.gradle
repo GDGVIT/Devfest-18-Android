@@ -106,6 +106,10 @@ dependencies {
 
     // CircleImageview
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    //Calligraphy
+    implementation 'io.github.inflationx:calligraphy3:3.0.0'
+    implementation 'io.github.inflationx:viewpump:1.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

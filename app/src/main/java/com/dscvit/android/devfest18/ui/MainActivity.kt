@@ -7,6 +7,7 @@ import com.dscvit.android.devfest18.R
 import com.dscvit.android.devfest18.ui.agenda.AgendaFragment
 import com.dscvit.android.devfest18.ui.bottomsheet.NavClickListener
 import com.dscvit.android.devfest18.ui.bottomsheet.NavigationBottomSheetFragment
+import com.dscvit.android.devfest18.ui.info.about.AboutFragment
 import com.dscvit.android.devfest18.ui.info.sponsors.SponsorFragment
 import com.dscvit.android.devfest18.ui.question.QuestionFragment
 import com.dscvit.android.devfest18.ui.quiz.QuizFragment
@@ -71,7 +72,7 @@ class MainActivity : AppCompatActivity(), NavClickListener {
                         fab_main_add.show()
                         QuestionFragment.newInstance()
                     }
-                    6 -> SponsorFragment.newInstance()
+                    6 -> AboutFragment.newInstance()
                     else -> SponsorFragment.newInstance()
                 })
                 .commitNow()

@@ -14,16 +14,12 @@ import com.dscvit.android.devfest18.ui.bottomsheet.NavClickListener
 import com.dscvit.android.devfest18.ui.bottomsheet.NavigationBottomSheetFragment
 import com.dscvit.android.devfest18.ui.info.about.AboutFragment
 import com.dscvit.android.devfest18.ui.info.sponsors.SponsorFragment
-import com.dscvit.android.devfest18.ui.main.MainFragment
 import com.dscvit.android.devfest18.ui.question.QuestionFragment
 import com.dscvit.android.devfest18.ui.quiz.QuizFragment
 import com.dscvit.android.devfest18.ui.scratch.ScratchFragment
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.act
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), NavClickListener {
 
@@ -73,12 +69,11 @@ class MainActivity : AppCompatActivity(), NavClickListener {
     private fun updateFragment(index: Int) {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.container, when(index) {
-                    0 -> MainFragment.newInstance()
                     1 -> AgendaFragment.newInstance()
                     2 -> ScratchFragment.newInstance()
                     3 -> QuizFragment.newInstance()
                     4 -> QuestionFragment.newInstance()
-                    else -> MainFragment.newInstance()
+                    else -> AboutFragment.newInstance()
                 })
                 .commitNow()
     }

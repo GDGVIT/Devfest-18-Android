@@ -40,7 +40,7 @@ class QuestionFragment : Fragment() {
     private var firebaseUser: FirebaseUser? = null
     private var questionList: QuestionList? = QuestionList()
 
-    private lateinit var questionAdapter: QuestionAdapter
+    private var questionAdapter: QuestionAdapter? = null
 
     companion object {
         fun newInstance() = QuestionFragment()
@@ -55,8 +55,6 @@ class QuestionFragment : Fragment() {
 
         showNotAuth()
 
-        questionRef.setValue(questionList)
-
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -70,11 +68,11 @@ class QuestionFragment : Fragment() {
                 firebaseUser = it
                 showQuestions()
 
-                with(rv_questions) {
-                    context?.let {
+                context?.let {
+                    with(rv_questions) {
                         layoutManager = LinearLayoutManager(it)
                         questionAdapter = QuestionAdapter(questionList!!.mainList, firebaseUser!!.uid)
-                        adapter = questionAdapter
+                        adapter = questionAdapter!!
                     }
                 }
 
@@ -86,7 +84,7 @@ class QuestionFragment : Fragment() {
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         questionList = dataSnapshot.getValue(QuestionList::class.java)
-                        questionAdapter.updateList(questionList?.mainList ?: arrayListOf())
+                        questionAdapter?.updateList(questionList?.mainList ?: arrayListOf())
                     }
                 })
             } ?: run {
@@ -141,5 +139,13 @@ class QuestionFragment : Fragment() {
                 context?.toast("Login failed")
             }
         }
+    }
+
+    private fun sort() {
+
+    }
+
+    private fun filter() {
+
     }
 }

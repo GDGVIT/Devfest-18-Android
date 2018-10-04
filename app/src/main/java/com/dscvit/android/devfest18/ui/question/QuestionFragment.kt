@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
@@ -113,7 +114,7 @@ class QuestionFragment : Fragment() {
         button_question_sort.setOnClickListener { sort() }
         button_question_filter.setOnClickListener { filter() }
 
-        activity?.fab_main_add?.setOnClickListener { sort() }
+        activity?.fab_main_add?.setOnClickListener { input() }
     }
 
     private fun showNotAuth() {
@@ -184,6 +185,26 @@ class QuestionFragment : Fragment() {
                     filterSelectionIndex = null
                 }
                 .show()
+    }
+
+    private fun input() {
+
+        MaterialDialog(requireContext())
+        .title(text = "New Question")
+        .input { dialog, text ->
+            var tempQuestion = Question(
+                    upvotes = 0.toLong(),
+                    question = text.toString(),
+                    tag = "Harsh Dattani"
+            )
+            questionList?.let {
+                it.backupList.add(tempQuestion)
+                it.mainList.add(tempQuestion)
+            }
+            questionRef.setValue(questionList)
+        }
+        .positiveButton(text = "Add")
+        .show()
     }
 
     private fun updateList() {

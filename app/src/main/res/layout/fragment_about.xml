@@ -5,24 +5,4 @@
     android:fitsSystemWindows="true">
 
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/dsclogo" />
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_gravity="bottom"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:paddingBottom="30dp"
-        android:paddingEnd="30dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:paddingStart="30dp" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

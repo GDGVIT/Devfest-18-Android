@@ -91,6 +91,7 @@ dependencies {
 
     //Material Dialogs
     implementation 'com.afollestad.material-dialogs:core:2.0.0-beta2'
+    implementation 'com.afollestad.material-dialogs:input:2.0.0-beta2'
 }
 
 apply plugin: 'com.google.gms.google-services'

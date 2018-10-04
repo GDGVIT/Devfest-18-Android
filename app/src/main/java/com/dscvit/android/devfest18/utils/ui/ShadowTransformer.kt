@@ -3,7 +3,6 @@ package com.dscvit.android.devfest18.utils.ui
 import android.view.View
 
 import androidx.viewpager.widget.ViewPager
-import com.dscvit.android.devfest18.ui.adapter.CardAdapter
 
 class ShadowTransformer(private val mViewPager: ViewPager, private val mAdapter: CardAdapter) : ViewPager.OnPageChangeListener, ViewPager.PageTransformer {
     private var mLastOffset: Float = 0.toFloat()

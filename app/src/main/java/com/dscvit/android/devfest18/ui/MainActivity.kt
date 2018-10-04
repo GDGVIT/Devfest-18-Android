@@ -1,25 +1,18 @@
 package com.dscvit.android.devfest18.ui
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.MotionEvent
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MotionEventCompat
 import com.dscvit.android.devfest18.R
 import com.dscvit.android.devfest18.ui.agenda.AgendaFragment
 import com.dscvit.android.devfest18.ui.bottomsheet.NavClickListener
 import com.dscvit.android.devfest18.ui.bottomsheet.NavigationBottomSheetFragment
-import com.dscvit.android.devfest18.ui.info.about.AboutFragment
 import com.dscvit.android.devfest18.ui.info.sponsors.SponsorFragment
 import com.dscvit.android.devfest18.ui.question.QuestionFragment
 import com.dscvit.android.devfest18.ui.quiz.QuizFragment
 import com.dscvit.android.devfest18.ui.scratch.ScratchFragment
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.act
 
 class MainActivity : AppCompatActivity(), NavClickListener {
 
@@ -49,16 +42,16 @@ class MainActivity : AppCompatActivity(), NavClickListener {
             showBottomSheet()
         }
 
-        bottom_app_bar.setOnTouchListener { _, event ->
-            val action: Int = MotionEventCompat.getActionMasked(event)
-            when(action) {
-                MotionEvent.ACTION_UP -> {
-                    showBottomSheet()
-                    return@setOnTouchListener true
-                }
-                else -> super.onTouchEvent(event)
-            }
-        }
+//        bottom_app_bar.setOnTouchListener { _, event ->
+//            val action: Int = MotionEventCompat.getActionMasked(event)
+//            when(action) {
+//                MotionEvent.ACTION_UP -> {
+//                    showBottomSheet()
+//                    return@setOnTouchListener true
+//                }
+//                else -> super.onTouchEvent(event)
+//            }
+//        }
     }
 
     private fun showBottomSheet() {
@@ -73,11 +66,13 @@ class MainActivity : AppCompatActivity(), NavClickListener {
                     1 -> AgendaFragment.newInstance()
                     2 -> ScratchFragment.newInstance()
                     3 -> QuizFragment.newInstance()
-                    4 -> {
+                    4 -> SponsorFragment.newInstance()
+                    5 -> {
                         fab_main_add.show()
                         QuestionFragment.newInstance()
                     }
-                    else -> AboutFragment.newInstance()
+                    6 -> SponsorFragment.newInstance()
+                    else -> SponsorFragment.newInstance()
                 })
                 .commitNow()
     }

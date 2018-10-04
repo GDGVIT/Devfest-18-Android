@@ -105,4 +105,16 @@
     <string name="text_4">Google code school teaches web technologies in the comfort of your browser through video lessons , coding challenges and screencasts.</string>
     <string name="title_5">Beta Testing</string>
     <string name="text_5">Beta Testing is the essence of developing a software. We test every aspect of our product before releasing it for the real-world exposure.</string>
+
+    <string-array name="speakers_list">
+        <item>RangaJagannath</item>
+        <item>Satish Chandra Gupta</item>
+        <item>Sachit Mishra</item>
+        <item>Kumar Rangarajan</item>
+        <item>Kishore Subramaniyan</item>
+        <item>Harsh Dattani</item>
+        <item>Shivram Srivasatava</item>
+        <item>Amit Tulshyan</item>
+        <item>General</item>
+    </string-array>
 </resources>

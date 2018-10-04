@@ -1,15 +1,22 @@
 package com.dscvit.android.devfest18.ui.question
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItems
+import com.afollestad.materialdialogs.list.listItemsMultiChoice
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.dscvit.android.devfest18.R
 import com.dscvit.android.devfest18.model.Question
 import com.dscvit.android.devfest18.model.QuestionList
+import com.dscvit.android.devfest18.ui.MainActivity
 import com.dscvit.android.devfest18.ui.adapter.QuestionAdapter
 import com.dscvit.android.devfest18.utils.hide
 import com.dscvit.android.devfest18.utils.show
@@ -25,6 +32,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_questions.*
 import org.jetbrains.anko.toast
 
@@ -39,8 +47,12 @@ class QuestionFragment : Fragment() {
 
     private var firebaseUser: FirebaseUser? = null
     private var questionList: QuestionList? = QuestionList()
+    private var questions: ArrayList<Question>? = questionList?.mainList
 
     private var questionAdapter: QuestionAdapter? = null
+
+    var sortSelectionIndex = 0
+    var filterSelectionIndex: IntArray? = null
 
     companion object {
         fun newInstance() = QuestionFragment()
@@ -52,6 +64,8 @@ class QuestionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        questionRef.setValue(questionList)
 
         showNotAuth()
 
@@ -84,7 +98,9 @@ class QuestionFragment : Fragment() {
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         questionList = dataSnapshot.getValue(QuestionList::class.java)
-                        questionAdapter?.updateList(questionList?.mainList ?: arrayListOf())
+                        questions = questionList?.mainList
+//                        questionAdapter?.updateList(questionList?.mainList ?: arrayListOf())
+                        updateList()
                     }
                 })
             } ?: run {
@@ -93,6 +109,11 @@ class QuestionFragment : Fragment() {
         }
 
         question_sign_in_button.setOnClickListener { signIn() }
+
+        button_question_sort.setOnClickListener { sort() }
+        button_question_filter.setOnClickListener { filter() }
+
+        activity?.fab_main_add?.setOnClickListener { sort() }
     }
 
     private fun showNotAuth() {
@@ -142,10 +163,42 @@ class QuestionFragment : Fragment() {
     }
 
     private fun sort() {
-
+        MaterialDialog(requireContext())
+                .title(text = "Sort Options")
+                .listItemsSingleChoice(items = listOf("Most up-votes first", "Recent questions first"), initialSelection = sortSelectionIndex) { dialog, index, text ->
+                    sortSelectionIndex = index
+                    updateList()
+                }
+                .show()
     }
 
     private fun filter() {
+        MaterialDialog(requireContext())
+                .title(text = "Filter Options")
+                .listItemsMultiChoice(R.array.speakers_list, initialSelection = filterSelectionIndex ?: intArrayOf()) { dialog, indices, items ->
+                    context?.toast("$indices")
+                    filterSelectionIndex = indices
+                }
+                .positiveButton(text = "Choose")
+                .negativeButton(text = "Clear") {
+                    filterSelectionIndex = null
+                }
+                .show()
+    }
 
+    private fun updateList() {
+
+        when(sortSelectionIndex) {
+            0 -> {
+                questions?.sortByDescending { it.upvotes }
+            }
+            1 -> {
+                questions?.sortByDescending { it.date }
+            }
+        }
+
+        filterSelectionIndex?.let {  }
+
+        questionAdapter?.updateList(questions ?: arrayListOf())
     }
 }

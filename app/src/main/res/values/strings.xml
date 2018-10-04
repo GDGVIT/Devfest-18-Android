@@ -5,21 +5,39 @@
 
     <!--String arrays for agenda 6th Oct-->
     <string-array name="agenda_6_oct_events">
-        <item>Speakers Session</item>
+        <item>Introduction</item>
+        <item>Speaker - Slinglabs</item>
+        <item>Speaker - LBRY</item>
+        <item>Speaker - CNCF</item>
+        <item>Speaker - AgoraIO</item>
         <item>Lunch</item>
+        <item>Actions on Google</item>
         <item>Panel Discussion</item>
+        <item>Q&amp;A Session</item>
         <item>Networking Session</item>
     </string-array>
     <string-array name="agenda_6_oct_timings">
-        <item>9:00 AM - 1:00 PM</item>
-        <item>1:00 PM - 2:00 PM</item>
+        <item>9:00 AM - 10:00 AM</item>
+        <item>10:00 AM - 10:30 AM</item>
+        <item>10:30 AM - 11:00 AM</item>
+        <item>11:00 AM - 11:30 AM</item>
+        <item>11:30 AM - 12:00 PM</item>
+        <item>12:00 PM - 2:00 PM</item>
         <item>2:00 PM - 4:00 PM</item>
-        <item>4:00 PM - 6:00 PM</item>
+        <item>4:00 PM - 5:00 PM</item>
+        <item>5:00 PM - 6:00 PM</item>
+        <item>6:00 PM - 9:00 PM</item>
     </string-array>
     <string-array name="agenda_6_oct_icons">
+        <item>ic_info_white_24dp</item>
+        <item>ic_mic_black_24dp</item>
+        <item>ic_mic_black_24dp</item>
+        <item>ic_mic_black_24dp</item>
         <item>ic_mic_black_24dp</item>
         <item>ic_food_black</item>
+        <item>ic_google_assistant_white</item>
         <item>ic_supervisor_account_black_24dp</item>
+        <item>ic_question_white</item>
         <item>ic_forum_black_24dp</item>
     </string-array>
     <string-array name="agenda_6_oct_colors">
@@ -27,35 +45,38 @@
         <item>green</item>
         <item>orange</item>
         <item>blue</item>
+        <item>yellow</item>
+        <item>green</item>
+        <item>orange</item>
+        <item>blue</item>
+        <item>yellow</item>
+        <item>green</item>
     </string-array>
 
     <!--String arrays for agenda 7th Oct-->
     <string-array name="agenda_7_oct_events">
+        <item>Introduction</item>
         <item>Opening Speech</item>
-        <item>Pitching</item>
-        <item>Break</item>
         <item>Pitching</item>
         <item>Lunch</item>
         <item>Pitching</item>
         <item>Break</item>
         <item>Pitching</item>
-        <item>Results</item>
+        <item>Results &amp; Prizes</item>
     </string-array>
     <string-array name="agenda_7_oct_timings">
-        <item>9:00 AM - 10:00 AM</item>
-        <item>10:00 AM - 11:30 AM</item>
-        <item>11:30 AM - 12:00 PM</item>
+        <item>9:00 AM - 9:30 AM</item>
+        <item>9:30 AM - 10:30 AM</item>
+        <item>10:30 AM - 12:00 PM</item>
         <item>12:00 PM - 1:30 PM</item>
-        <item>1:30 PM - 2:30 PM</item>
-        <item>2:30 PM - 4:00 PM</item>
-        <item>4:00 PM - 4:30 PM</item>
-        <item>4:30 PM - 6:00 PM</item>
+        <item>1:30 PM - 4:00 PM</item>
+        <item>4:00 PM - 4:15 PM</item>
+        <item>4:15 PM - 6:00 PM</item>
         <item>6:00 PM</item>
     </string-array>
     <string-array name="agenda_7_oct_icons">
+        <item>ic_info_white_24dp</item>
         <item>ic_mic_black_24dp</item>
-        <item>ic_projector_screen</item>
-        <item>ic_coffee_black</item>
         <item>ic_projector_screen</item>
         <item>ic_food_black</item>
         <item>ic_projector_screen</item>
@@ -67,7 +88,6 @@
         <item>yellow</item>
         <item>blue</item>
         <item>orange</item>
-        <item>blue</item>
         <item>green</item>
         <item>blue</item>
         <item>orange</item>
@@ -106,8 +126,9 @@
     <string name="title_5">Beta Testing</string>
     <string name="text_5">Beta Testing is the essence of developing a software. We test every aspect of our product before releasing it for the real-world exposure.</string>
 
+     <!-- List of speakers -->
     <string-array name="speakers_list">
-        <item>RangaJagannath</item>
+        <item>Ranga Jagannath</item>
         <item>Satish Chandra Gupta</item>
         <item>Sachit Mishra</item>
         <item>Kumar Rangarajan</item>

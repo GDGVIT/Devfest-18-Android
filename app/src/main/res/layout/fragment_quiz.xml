@@ -39,7 +39,7 @@
             android:indeterminateTintMode="src_atop"
             android:max="200"
             android:progress="0"
-            android:scaleY="5"
+            android:scaleY="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -49,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/shape_capsule_border"
             android:paddingStart="16dp"
@@ -58,8 +59,6 @@
             android:paddingRight="16dp"
             android:paddingBottom="8dp"
             android:text="SCORE 0"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintBottom_toTopOf="@+id/text_quiz_question"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:gravity="center"
             android:text="This is a sample question"
@@ -78,7 +78,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_quiz_score_live"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="This is a sample question" />
 
         <LinearLayout

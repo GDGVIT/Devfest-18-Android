@@ -44,6 +44,7 @@
             android:id="@+id/fab_main_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_anchor="@id/bottom_app_bar"
             app:srcCompat="@drawable/ic_add_add_24dp" />
 

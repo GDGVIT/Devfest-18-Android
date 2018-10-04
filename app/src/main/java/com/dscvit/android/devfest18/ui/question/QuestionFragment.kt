@@ -66,7 +66,7 @@ class QuestionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        questionRef.setValue(questionList)
+//        questionRef.setValue(questionList)
 
         showNotAuth()
 
@@ -125,11 +125,13 @@ class QuestionFragment : Fragment() {
     private fun showQuestions() {
         hideAll()
         layout_question_list?.show()
+        activity?.fab_main_add?.show()
     }
 
     private fun hideAll() {
         layout_question_list?.hide()
         layout_question_not_auth?.hide()
+        activity?.fab_main_add?.hide()
     }
 
     private fun signIn() {
@@ -202,6 +204,8 @@ class QuestionFragment : Fragment() {
                 it.mainList.add(tempQuestion)
             }
             questionRef.setValue(questionList)
+
+            FirebaseDatabase.getInstance().getReference("questionList").push().setValue(tempQuestion)
         }
         .positiveButton(text = "Add")
         .show()
@@ -210,12 +214,8 @@ class QuestionFragment : Fragment() {
     private fun updateList() {
 
         when(sortSelectionIndex) {
-            0 -> {
-                questions?.sortByDescending { it.upvotes }
-            }
-            1 -> {
-                questions?.sortByDescending { it.date }
-            }
+            0 -> questions?.sortByDescending { it.upvotes }
+            1 -> questions?.sortByDescending { it.date }
         }
 
         filterSelectionIndex?.let {  }

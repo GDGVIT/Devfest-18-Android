@@ -61,17 +61,13 @@ class MainActivity : AppCompatActivity(), NavClickListener {
     }
 
     private fun updateFragment(index: Int) {
-        fab_main_add.hide()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.container, when(index) {
                     1 -> AgendaFragment.newInstance()
                     2 -> ScratchFragment.newInstance()
                     3 -> QuizFragment.newInstance()
                     4 -> SponsorFragment.newInstance()
-                    5 -> {
-                        fab_main_add.show()
-                        QuestionFragment.newInstance()
-                    }
+                    5 -> QuestionFragment.newInstance()
                     6 -> AboutFragment.newInstance()
                     else -> SponsorFragment.newInstance()
                 })

@@ -105,4 +105,18 @@
     <string name="text_4">Google code school teaches web technologies in the comfort of your browser through video lessons , coding challenges and screencasts.</string>
     <string name="title_5">Beta Testing</string>
     <string name="text_5">Beta Testing is the essence of developing a software. We test every aspect of our product before releasing it for the real-world exposure.</string>
+
+    //introductory Slides
+    <string name="slide_one_title">"Welcome!"</string>
+    <string name="Slide_one_desc">"Your one stop destination for all things devfest"</string>
+
+    <string name="slide_two_title">"Afraid to miss out?"</string>
+    <string name="Slide_two_desc">"Get regular notifications about the slightest of changes"</string>
+
+    <string name="slide_three_title">"Voila!"</string>
+    <string name="slide_three_desc">"Stand a chance to win gdg goodies!"</string>
+    <string name="my_preference" />
+    <string name="my_preference_key" />
+
+
 </resources>

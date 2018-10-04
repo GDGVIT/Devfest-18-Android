@@ -42,8 +42,8 @@ class AgendaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 //        layout_agenda_light.setBackgroundColor(lightColour.getColourId(context))
 //        layout_agenda_light.setCardBackgroundColor(colour.getColourId(context))
         image_agenda_light_icon.setImageResource(icon.getResId(context))
-//        ImageViewCompat.setImageTintList(image_agenda_light_icon, ColorStateList.valueOf(lightColour.getColourId(context)))
-//        text_agenda_light_event.setTextColor(lightColour.getColourId(context))
+        ImageViewCompat.setImageTintList(image_agenda_light_icon, ColorStateList.valueOf(lightColour.getColourId(context)))
+        text_agenda_light_event.setTextColor(lightColour.getColourId(context))
         text_agenda_light_event.text = event
         text_agenda_light_timing.text = timing
     }

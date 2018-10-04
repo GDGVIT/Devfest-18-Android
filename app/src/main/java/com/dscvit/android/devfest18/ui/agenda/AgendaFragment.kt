@@ -8,13 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dscvit.android.devfest18.R
-import com.dscvit.android.devfest18.di.Injectable
 import com.dscvit.android.devfest18.ui.adapter.AgendaAdapter
 import kotlinx.android.synthetic.main.fragment_agenda.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
-class AgendaFragment : Fragment(), Injectable {
+class AgendaFragment : Fragment() {
 
     companion object {
         fun newInstance() = AgendaFragment()
@@ -23,6 +22,7 @@ class AgendaFragment : Fragment(), Injectable {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_agenda, container, false)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

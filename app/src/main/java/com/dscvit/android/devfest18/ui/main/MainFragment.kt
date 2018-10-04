@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.dscvit.android.devfest18.R
-import com.dscvit.android.devfest18.di.Injectable
 
-class MainFragment : Fragment(), Injectable {
+class MainFragment : Fragment() {
 
     companion object {
         fun newInstance() = MainFragment()

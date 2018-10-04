@@ -15,6 +15,7 @@ import com.dscvit.android.devfest18.ui.bottomsheet.NavigationBottomSheetFragment
 import com.dscvit.android.devfest18.ui.info.about.AboutFragment
 import com.dscvit.android.devfest18.ui.info.sponsors.SponsorFragment
 import com.dscvit.android.devfest18.ui.main.MainFragment
+import com.dscvit.android.devfest18.ui.question.QuestionFragment
 import com.dscvit.android.devfest18.ui.quiz.QuizFragment
 import com.dscvit.android.devfest18.ui.scratch.ScratchFragment
 import dagger.android.DispatchingAndroidInjector
@@ -24,12 +25,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.act
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, NavClickListener {
-
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
-    override fun supportFragmentInjector() = dispatchingAndroidInjector
+class MainActivity : AppCompatActivity(), NavClickListener {
 
     private val navigationBottomSheetFragment = NavigationBottomSheetFragment()
 
@@ -81,7 +77,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, NavClickLi
                     1 -> AgendaFragment.newInstance()
                     2 -> ScratchFragment.newInstance()
                     3 -> QuizFragment.newInstance()
-                    4 -> SponsorFragment.newInstance()
+                    4 -> QuestionFragment.newInstance()
                     else -> MainFragment.newInstance()
                 })
                 .commitNow()

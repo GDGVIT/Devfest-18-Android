@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener
 import android.content.Intent
 import android.util.Log
 import com.bumptech.glide.Glide
+import com.dscvit.android.devfest18.utils.hide
+import com.dscvit.android.devfest18.utils.show
 import org.jetbrains.anko.imageResource
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.AuthResult
@@ -107,16 +109,16 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
     private fun updateAccountUI(user: FirebaseUser?) {
         user?.let { user ->
 
-            layout_nav_before_auth.visibility = View.GONE
-            layout_nav_after_auth.visibility = View.VISIBLE
+            layout_nav_before_auth?.hide()
+            layout_nav_after_auth?.show()
 
             Glide.with(requireContext()).load(user.photoUrl).into(image_account)
             text_account_username.text = user.displayName
             text_account_email.text = user.email
         } ?: run {
 
-            layout_nav_before_auth.visibility = View.VISIBLE
-            layout_nav_after_auth.visibility = View.GONE
+            layout_nav_before_auth?.show()
+            layout_nav_after_auth?.hide()
             image_account.imageResource = R.drawable.ic_account_circle_white_24dp
         }
     }

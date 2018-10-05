@@ -6,10 +6,10 @@
     <!--String arrays for agenda 6th Oct-->
     <string-array name="agenda_6_oct_events">
         <item>Introduction</item>
-        <item>Speaker - Slinglabs</item>
+        <item>Speaker - Slanglabs</item>
         <item>Speaker - LBRY</item>
         <item>Speaker - CNCF</item>
-        <item>Speaker - AgoraIO</item>
+        <item>Speaker - Agora.io</item>
         <item>Lunch</item>
         <item>Actions on Google</item>
         <item>Panel Discussion</item>
@@ -128,6 +128,7 @@
 
      <!-- List of speakers -->
     <string-array name="speakers_list">
+        <item>General</item>
         <item>Ranga Jagannath</item>
         <item>Satish Chandra Gupta</item>
         <item>Sachit Mishra</item>
@@ -136,6 +137,15 @@
         <item>Harsh Dattani</item>
         <item>Shivram Srivasatava</item>
         <item>Amit Tulshyan</item>
-        <item>General</item>
     </string-array>
+
+    <string name="speaker_0">General</string>
+    <string name="speaker_1">Ranga Jagannath</string>
+    <string name="speaker_2">Satish Chandra Gupta</string>
+    <string name="speaker_3">Sachit Mishra</string>
+    <string name="speaker_4">Kumar Rangarajan</string>
+    <string name="speaker_5">Kishore Subramaniyan</string>
+    <string name="speaker_6">Harsh Dattani</string>
+    <string name="speaker_7">Shivram Srivasatava</string>
+    <string name="speaker_8">Amit Tulshyan</string>
 </resources>

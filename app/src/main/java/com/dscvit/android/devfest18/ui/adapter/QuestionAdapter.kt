@@ -49,5 +49,7 @@ class QuestionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
 
         button_question_upvote.setOnClickListener { listener(question) }
+
+        chip_question_tag.text = question.tag
     }
 }

@@ -1,5 +1,6 @@
 package com.dscvit.android.devfest18.ui.bottomsheet
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull
 import com.google.android.gms.tasks.OnCompleteListener
 import android.content.Intent
 import android.util.Log
+import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.dscvit.android.devfest18.utils.hide
 import com.dscvit.android.devfest18.utils.show
@@ -28,6 +30,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.AuthCredential
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.toast
 

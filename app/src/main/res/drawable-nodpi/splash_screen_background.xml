@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:opacity="opaque">
 
     <item android:drawable="@color/dark_black"/>
@@ -10,6 +11,7 @@
             android:gravity="center"
             android:width="10dp"
             android:height="10dp"
+            app:srcCompat="@drawable/ic_devfest_logo"
             android:src="@drawable/app_logo"/>
     </item>
 

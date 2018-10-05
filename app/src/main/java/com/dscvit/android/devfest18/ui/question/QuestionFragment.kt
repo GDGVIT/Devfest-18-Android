@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
@@ -21,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.chip.ChipGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -32,6 +36,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_questions.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
+import org.jetbrains.anko.childrenSequence
 import org.jetbrains.anko.toast
 import java.util.*
 
@@ -89,9 +94,7 @@ class QuestionFragment : Fragment() {
                 with(rv_questions) {
                     layoutManager = LinearLayoutManager(it)
                     questionAdapter = QuestionAdapter(questions, firebaseUser!!.uid) { question ->
-                        if (firebaseUser!!.email!! == question.userEmail) {
-
-                        } else {
+                        if (firebaseUser!!.email!! != question.userEmail) {
                             if (firebaseUser!!.uid in question.upVotedList) {
                                 question.upvotes = question.upvotes - 1
                                 question.upVotedList.remove(firebaseUser!!.uid)
@@ -101,7 +104,10 @@ class QuestionFragment : Fragment() {
                                 question.upvotes = question.upvotes + 1
                                 question.upVotedList.add(firebaseUser!!.uid)
                                 questionRef.child("mainList").child(question.id).setValue(question)
+                                context.toast("Upvoted")
                             }
+                        } else {
+                            context.toast("Can't upvote")
                         }
                     }
                     adapter = questionAdapter!!
@@ -218,7 +224,6 @@ class QuestionFragment : Fragment() {
         MaterialDialog(requireContext())
                 .title(text = "Filter Options")
                 .listItemsMultiChoice(items = speakersList, initialSelection = filterSelectionIndex ?: intArrayOf()) { dialog, indices, items ->
-                    context?.toast("$indices")
                     filterSelectionIndex = indices
                 }
                 .positiveButton(text = "Choose")
@@ -230,42 +235,81 @@ class QuestionFragment : Fragment() {
 
     private fun input() {
 
-        MaterialDialog(requireContext())
-        .title(text = "New Question")
-        .input { dialog, text ->
-            var tempQuestion = Question(
-                    id = questionRef.child("mainList").push().key!!,
-                    upvotes = 0.toLong(),
-                    question = text.toString(),
-                    tag = "Harsh Dattani",
-                    upVotedList = arrayListOf(""),
-                    date = Date(),
-                    userName = firebaseUser?.displayName ?: "",
-                    userEmail = firebaseUser!!.email ?: ""
-            )
-//            questionList?.let {
-////                it.backupList.add(tempQuestion)
-////                it.mainList.add(tempQuestion)
-////            }
-////            questionRef.setValue(questionList)
-            questionRef.child("mainList").child(tempQuestion.id).setValue(tempQuestion)
-            questionRef.child("backupList").child(tempQuestion.id).setValue(tempQuestion)
+//        MaterialDialog(requireContext())
+//        .title(text = "New Question")
+//        .input { dialog, text ->
+//            var tempQuestion = Question(
+//                    id = questionRef.child("mainList").push().key!!,
+//                    upvotes = 0.toLong(),
+//                    question = text.toString(),
+//                    tag = "Harsh Dattani",
+//                    upVotedList = arrayListOf(""),
+//                    date = Date(),
+//                    userName = firebaseUser?.displayName ?: "",
+//                    userEmail = firebaseUser!!.email ?: ""
+//            )
+//            questionRef.child("mainList").child(tempQuestion.id).setValue(tempQuestion)
+//            questionRef.child("backupList").child(tempQuestion.id).setValue(tempQuestion)
+//
+//        }
+//        .positiveButton(text = "Add")
+//        .show()
 
-//            FirebaseDatabase.getInstance().getReference("questionList").child("mainList").push().setValue(tempQuestion)
-        }
-        .positiveButton(text = "Add")
-        .show()
+        MaterialDialog(requireContext())
+                .title(text = "Enter a question")
+                .customView(R.layout.layout_input_dialog, scrollable = true)
+                .positiveButton(text = "Add") {
+                    it.getCustomView()?.let { customView ->
+                        val chipGroup = customView.findViewById<ChipGroup>(R.id.input_chip_group)
+                        val input = customView.findViewById<EditText>(R.id.input_questionn)
+//                        chipGroup.checkedChipId
+//                        input.text
+//                        context?.toast("${chipGroup.checkedChipId} - ${input.text}")
+                        var tempQuestion = Question(
+                                id = questionRef.child("mainList").push().key!!,
+                                upvotes = 0.toLong(),
+                                question = input.text.toString(),
+                                tag = when(chipGroup.checkedChipId) {
+                                    R.id.chip1 -> requireContext().getString(R.string.speaker_0)
+                                    R.id.chip2 -> requireContext().getString(R.string.speaker_1)
+                                    R.id.chip3 -> requireContext().getString(R.string.speaker_2)
+                                    R.id.chip4 -> requireContext().getString(R.string.speaker_3)
+                                    R.id.chip5 -> requireContext().getString(R.string.speaker_4)
+                                    R.id.chip6 -> requireContext().getString(R.string.speaker_5)
+                                    R.id.chip7 -> requireContext().getString(R.string.speaker_6)
+                                    R.id.chip8 -> requireContext().getString(R.string.speaker_7)
+                                    R.id.chip9 -> requireContext().getString(R.string.speaker_8)
+                                    else -> ""
+                                },
+                                upVotedList = arrayListOf(""),
+                                date = Date(),
+                                userName = firebaseUser?.displayName ?: "",
+                                userEmail = firebaseUser!!.email ?: ""
+                        )
+                        questionRef.child("mainList").child(tempQuestion.id).setValue(tempQuestion)
+                        questionRef.child("backupList").child(tempQuestion.id).setValue(tempQuestion)
+                    }
+                }
+                .negativeButton(text = "Cancel")
+                .show()
     }
 
     private fun updateList() {
 
-        when(sortSelectionIndex) {
-            0 -> questions?.sortByDescending { it?.upvotes }
-            1 -> questions?.sortByDescending { it?.date }
+        var tempQuestions = questions
+
+        filterSelectionIndex?.let { filterIndices ->
+            tempQuestions = ArrayList(questions!!.filter {
+//                filterIndices.contains(speakersList!!.indexOf(it!!.tag))
+                speakersList!!.indexOf(it!!.tag) == 0
+            })
         }
 
-        filterSelectionIndex?.let {  }
+        when(sortSelectionIndex) {
+            0 -> tempQuestions?.sortByDescending { it?.upvotes }
+            1 -> tempQuestions?.sortByDescending { it?.date }
+        }
 
-        questionAdapter?.updateList(questions)
+        questionAdapter?.updateList(tempQuestions)
     }
 }

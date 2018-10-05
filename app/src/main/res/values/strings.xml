@@ -95,16 +95,8 @@
         <item></item>
     </string-array>
 
-    <string name="title_1">About Us</string>
-    <string name="text_1">Google Developer Group, VIT Vellore is a non-profit developers group to learn, share and know more about Google technologies. Our events are open to newbies, developers, managers and organizations who are interested in Google\'s technologies or use them as part of their projects.</string>
-    <string name="title_2">Tech Talks</string>
-    <string name="text_2">Google talks are a grassroots-style series of presentation given by various technical experts spanning a wide spectrum of topics in technology and related areas.</string>
-    <string name="title_3">DEV Fests</string>
-    <string name="text_3">GDG Dev Fests are large scale,community-run events that offer speaker sessions across multiple product areas , hack-a-thons , code labs and many more.</string>
-    <string name="title_4">Code School</string>
-    <string name="text_4">Google code school teaches web technologies in the comfort of your browser through video lessons , coding challenges and screencasts.</string>
-    <string name="title_5">Beta Testing</string>
-    <string name="text_5">Beta Testing is the essence of developing a software. We test every aspect of our product before releasing it for the real-world exposure.</string>
+
+
 
     //introductory Slides
     <string name="slide_one_title">"Welcome!"</string>
@@ -119,4 +111,145 @@
     <string name="my_preference_key" />
 
 
+
+    <string name="club_name">Developer Student Circle</string>
+    <string name="club_loc">VIT Vellore</string>
+    <string name="title_1">About Us</string>
+    <string name="text_1">Google Developer Group, VIT Vellore is a non-profit developers group to learn, share and know more about Google technologies. Our events are open to newbies, developers, managers and organizations who are interested in Google\'s technologies or use them as part of their projects.</string>
+    <string name="title_2">Tech Talks</string>
+    <string name="text_2">Google talks are a grassroots-style series of presentation given by various technical experts spanning a wide spectrum of topics in technology and related areas.</string>
+    <string name="title_3">DEV Fests</string>
+    <string name="text_3">GDG Dev Fests are large scale,community-run events that offer speaker sessions across multiple product areas , hack-a-thons , code labs and many more.</string>
+    <string name="title_4">Code School</string>
+    <string name="text_4">Google code school teaches web technologies in the comfort of your browser through video lessons , coding challenges and screencasts.</string>
+    <string name="title_5">Beta Testing</string>
+    <string name="text_5">Beta Testing is the essence of developing a software. We test every aspect of our product before releasing it for the real-world exposure.</string>
+
+    <string name="tth">The Hackathon</string>
+    <string name="hq1">What is the format of the hack?</string>
+
+    <string name="ha1">The hack is scheduled to be a month long. During this month participants will have to submit their ideas and work on them. Selected teams will get a chance to pitch their ideas to judges on the final day.</string>
+
+    <string name="hq2">What is the prize money?</string>
+
+    <string name="ha2">Total prizes worth 20 lakh to be won.</string>
+
+    <string name="hq3">When is the event?</string>
+
+    <string name="ha3">The event will be held on the 7th of October where the finalists will be allowed to pitch their ideas.</string>
+
+    <string name="hq4">What is the venue for the event?</string>
+
+    <string name="ha4">The venue for the event is Anna Auditorium.</string>
+
+    <string name="hq5">What is the eligibility for participants?</string>
+
+    <string name="ha5">Anyone can register for the hack, as the month progresses eliminations will be made based on the ideas submitted.</string>
+
+    <string name="hq6">What is the timeline for the event?</string>
+
+    <string name="ha6">Refer from the timeline section.</string>
+
+    <string name="hq7">What is the evaluation criteria ?</string>
+
+    <string name="ha7">R1 : Judged on the basis of Novelty and feasibility of ideas. R2 : Judged on the basis of implementation of the idea. R3 : Decided upon by the judges.</string>
+
+    <string name="hq8">Are there any rules and regulations participants are supposed to follow ?</string>
+
+    <string name="ha8">Participants are required to follow the guidelines mentioned on the gravitas website.</string>
+
+    <string name="hq9">How much time will a team get to present on the final day?</string>
+
+    <string name="ha9">Each team will get about 3\-5 mins of pitching time.</string>
+
+    <string name="hq10">What do I need?</string>
+
+    <string name="ha10">The participants are expected to carry their laptops and chargers to the event.</string>
+
+    <string name="hq11">What is the min and max team size?</string>
+
+    <string name="ha11">There is no minimum team size. Teams upto a number of 5 members will be allowed.</string>
+
+    <string name="hq12">What are problem statements and by when will we get them?</string>
+
+    <string name="ha12">Problem statements will be conveyed to the participants by Sept 10th.</string>
+
+    <string name="hq13">What about food?</string>
+
+    <string name="ha13">Pizzas and other refreshments like coffee will be provided to the participants.</string>
+
+    <string name="hq14">What do I need for the final pitch?</string>
+
+    <string name="ha14">Participants will be required to present a fully working project</string>
+
+    <string name="hq15">Help</string>
+
+    <string name="ha15">If you need any assistance you can write to us at dscvitvellore@gmail.com  or approach any of our coordinators present during the event. All the best, and happy hacking!</string>
+
+    <string name="td">DevTalks</string>
+
+
+    <string name="dq1">What is DevTalks?</string>
+
+    <string name="da1">DevTalks is a convention which will have keynote sessions delivered by industry experts about various ‘Disruptive technologies used in the Industry’. It will also comprise of a networking session at the end for the finalists of the hackathon.</string>
+
+    <string name="dq2">What is the venue for the event?</string>
+
+    <string name="da2">The venue for the event is Anna Auditorium.</string>
+
+    <string name="dq3">When is the event?</string>
+
+    <string name="da3">The event will take place on the 6th of October.</string>
+
+    <string name="dq4">What is the event timeline?</string>
+
+    <string name="da4">Refer from the previous section</string>
+
+    <string name="dq5">What is the registration procedure?</string>
+
+    <string name="da5">After registering for the waitlist we will send you a registration form. Based on the content of the form you will be sent an invite confirming your participation in the convention.</string>
+
+    <string name="dq6">What is the networking session?</string>
+
+    <string name="da6">The networking session would be a closed one on one session between the speakers/judges and the participants.</string>
+
+    <string name="dq7">When will the networking session take place?</string>
+
+    <string name="da7">The networking session will take place immediately after the convention is over.</string>
+
+    <string name="dq8">What is the eligibility for the session?</string>
+
+    <string name="da8">Hackathon finalists and active participants selected during the convention will be eligible for the networking session.</string>
+
+    <string name="dq9">What’s the registration fee?</string>
+
+    <string name="da9">There is no registration fee for the event, DevTalks is completely free of cost.</string>
+
+    <string name="dq10">How do I get to VIT Vellore?</string>
+
+    <string name="da10">VIT Vellore ,Near Katpadi Road, Vellore, Tamil Nadu 632014</string>
+
+    <string name="dq11">Travel and Accommodation for the event?</string>
+
+    <string name="da11">Participants are required to find their own mode of transport. For information about accommodation you can refer to the gravitas website.</string>
+
+
+
+
+
+
+<string-array name="speakers_list">
+        <item>RangaJagannath</item>
+        <item>Satish Chandra Gupta</item>
+        <item>Sachit Mishra</item>
+        <item>Kumar Rangarajan</item>
+        <item>Kishore Subramaniyan</item>
+        <item>Harsh Dattani</item>
+        <item>Shivram Srivasatava</item>
+        <item>Amit Tulshyan</item>
+        <item>General</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

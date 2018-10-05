@@ -13,7 +13,7 @@
     <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowBackground">@drawable/splash_screen_background</item>
-        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog">

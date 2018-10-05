@@ -42,14 +42,14 @@
         android:textColor="@color/white"/>
 
     <Button
+        android:id="@+id/bnNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next"
-        android:textSize="16sp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:background="@null"
-        android:id="@+id/bnNext"
-        android:textColor="@color/white"/>
+        android:text="Next"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 
 </RelativeLayout>

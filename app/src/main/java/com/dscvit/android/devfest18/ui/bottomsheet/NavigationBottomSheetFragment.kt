@@ -133,11 +133,17 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
         layout_nav_scratch.setOnClickListener {
             navClickListener?.onNavItemClicked(2)
         }
-        layout_nav_sponsors.setOnClickListener {
+        layout_nav_quiz.setOnClickListener {
             navClickListener?.onNavItemClicked(3)
         }
-        layout_nav_about.setOnClickListener {
+        layout_nav_sponsors.setOnClickListener {
             navClickListener?.onNavItemClicked(4)
+        }
+        layout_nav_questions.setOnClickListener {
+            navClickListener?.onNavItemClicked(5)
+        }
+        layout_nav_about.setOnClickListener {
+            navClickListener?.onNavItemClicked(6)
         }
         resetBackgrounds()
     }
@@ -146,7 +152,9 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
         text_nav_main.setBackgroundResource(0)
         text_nav_agenda.setBackgroundResource(0)
         text_nav_scratch.setBackgroundResource(0)
+        text_nav_quiz.setBackgroundResource(0)
         text_nav_sponsors.setBackgroundResource(0)
+        text_nav_questions.setBackgroundResource(0)
         text_nav_about.setBackgroundResource(0)
     }
 
@@ -156,8 +164,10 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
             0 -> text_nav_main.backgroundResource = bgResourceId
             1 -> text_nav_agenda.backgroundResource = bgResourceId
             2 -> text_nav_scratch.backgroundResource = bgResourceId
-            3 -> text_nav_sponsors.backgroundResource = bgResourceId
-            4 -> text_nav_about.backgroundResource = bgResourceId
+            3 -> text_nav_quiz.backgroundResource = bgResourceId
+            4 -> text_nav_sponsors.backgroundResource = bgResourceId
+            5 -> text_nav_questions.backgroundResource = bgResourceId
+            6 -> text_nav_about.backgroundResource = bgResourceId
         }
     }
 }

@@ -21,7 +21,7 @@ import com.dscvit.android.devfest18.ui.adapter.MPagerAdapter;
 public class IntroAcivity extends AppCompatActivity implements View.OnClickListener {
 
     private ViewPager mPager;
-    private int[] layouts={R.layout.first_slide,R.layout.second_slide,R.layout.third_slide};
+    private int[] layouts={R.layout.first_slide,R.layout.second_slide,R.layout.third_slide,R.layout.fourth_slide};
     private MPagerAdapter mPagerAdapter;
 
     private LinearLayout Dots_Layout;
@@ -75,7 +75,7 @@ public class IntroAcivity extends AppCompatActivity implements View.OnClickListe
                       btnBack.setBackground(null);
                       btnNext.setBackground(null);
                       btnNext.setText("Start");
-                      btnBack.setVisibility(View.INVISIBLE);
+                      btnBack.setVisibility(View.VISIBLE);
                   }
                   else if(position==0)
                   {
@@ -130,7 +130,7 @@ public class IntroAcivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bnback:
-
+                loadbackslide();
                 break;
             case R.id.bnNext:
                 loadnextslide();
@@ -154,6 +154,14 @@ public class IntroAcivity extends AppCompatActivity implements View.OnClickListe
         {
             loadHome();
             new PreferenceManager(this).writePreference();
+        }
+    }
+    private  void loadbackslide()
+    {
+        int next_slide=mPager.getCurrentItem()-1;
+        if(next_slide<layouts.length)
+        {
+            mPager.setCurrentItem(next_slide);
         }
     }
 

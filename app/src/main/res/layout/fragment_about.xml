@@ -1,28 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:background="@color/colorDarkBlack"
+    android:orientation="vertical"
+    tools:context=".ui.info.about.AboutFragment">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/dsclogo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/club_name"
+            android:gravity="center"
+            android:textSize="35sp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Title"
+            android:textColor="@color/colorWhite" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="2dp"
+                android:background="@color/colorLightPurple" />
+
+            <View
+                android:layout_width="25dp"
+                android:layout_height="2dp"
+                android:background="@color/colorDarkPurple" />
 
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/dsclogo" />
+        </LinearLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_gravity="bottom"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:paddingBottom="30dp"
-        android:paddingEnd="30dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:paddingStart="30dp" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="@string/club_loc"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Title"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/title_1"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Title"
+            android:textColor="@color/colorWhite" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="2dp"
+                android:background="@color/colorLightPurple" />
+
+            <View
+                android:layout_width="25dp"
+                android:layout_height="2dp"
+                android:background="@color/colorDarkPurple" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/text_1"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/title_2"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Title"
+            android:textColor="@color/colorWhite" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="2dp"
+                android:background="@color/colorLightPurple" />
+
+            <View
+                android:layout_width="25dp"
+                android:layout_height="2dp"
+                android:background="@color/colorDarkPurple" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/text_2"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/title_3"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Title"
+            android:textColor="@color/colorWhite" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="2dp"
+                android:background="@color/colorLightPurple" />
+
+            <View
+                android:layout_width="25dp"
+                android:layout_height="2dp"
+                android:background="@color/colorDarkPurple" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/text_3"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/title_4"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Title"
+            android:textColor="@color/colorWhite" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="2dp"
+                android:background="@color/colorLightPurple" />
+
+            <View
+                android:layout_width="25dp"
+                android:layout_height="2dp"
+                android:background="@color/colorDarkPurple" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/text_4"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/title_5"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Title"
+            android:textColor="@color/colorWhite" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="2dp"
+                android:background="@color/colorLightPurple" />
+
+            <View
+                android:layout_width="25dp"
+                android:layout_height="2dp"
+                android:background="@color/colorDarkPurple" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/text_5"
+            android:textColor="@color/colorWhite"/>
+
+    </LinearLayout>
+
+</ScrollView>

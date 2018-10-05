@@ -2,32 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yellow">
+    android:background="@color/dark_black">
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/notofication_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/slide_two"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginBottom="20dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/slide_two_title"
-        android:layout_gravity="center"
-        android:textSize="21dp"
-        android:layout_margin="16dp"
-        android:textColor="@color/dark_black"></TextView>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Slide_two_desc"
-        android:elegantTextHeight="true"
-        android:textSize="15dp"
-        android:layout_margin="8dp"
-        android:textColor="@color/dark_black"></TextView>
+
 
 
 

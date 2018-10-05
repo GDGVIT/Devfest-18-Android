@@ -28,6 +28,13 @@
     <color name="magenta">#6b40ff</color>
     <color name="magenta_dark">#5037a5</color>
 
+    <color name="colorDarkPurple">#7838A7</color>
+    <color name="colorDarkBlack">#2C2C2C</color>
+    <color name="colorLightPurple">#AE40FF</color>
+    <color name="colorDarkMagenta">#6B40FF</color>
+    <color name="colorLightMagenta">#5037A5</color>
+    <color name="colorWhite">#FFFFFF</color>
+
     <!--<color name="teal_100">#B2DFDB</color>-->
     <color name="blue_100">#BBDEFB</color>
     <color name="green_100">#C8E6C9</color>

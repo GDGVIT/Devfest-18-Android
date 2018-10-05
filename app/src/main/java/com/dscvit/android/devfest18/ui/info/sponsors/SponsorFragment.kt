@@ -52,7 +52,7 @@ class SponsorFragment : androidx.fragment.app.Fragment(), DiscreteScrollView.OnI
                 Sponsor("balsamiq", "Sponsor", "https://balsamiq.com/", R.drawable.balsamiq_logo),
                 Sponsor("Pixectra", "Sponsor", "http://www.pixectra.com/", R.drawable.pixectra_logo),
                 //                new Sponsor("Decoder", "Sponsor", "url", ...)
-                Sponsor("The Souled Store", "Sponsor", "https://www.thesouledstore.com/", R.drawable.souled_store_logo),
+              //  Sponsor("The Souled Store", "Sponsor", "https://www.thesouledstore.com/", R.drawable.souled_store_logo),
                 Sponsor("CNCF", "Sponsor", "https://www.cncf.io/", R.drawable.cncf_logo),
                 Sponsor("Khronos", "Sponsor", "https://www.khronos.org/", R.drawable.khronos_logo),
                 Sponsor("Agora", "Sponsor", "https://www.agora.io/en/", R.drawable.agora_logo),

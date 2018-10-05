@@ -46,35 +46,6 @@
             app:layout_constraintTop_toBottomOf="@+id/text_agenda_light_event"
             tools:text="9:00 AM - 1:00 PM" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group_agenda"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/text_agenda_light_timing"
-            app:layout_constraintTop_toBottomOf="@+id/text_agenda_light_timing"
-            app:layout_constraintVertical_bias="0.0">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Karthik Padhmadhan"
-                android:textColor="@android:color/white"
-                app:chipBackgroundColor="@color/dark_black"
-                app:chipIcon="@drawable/speaker1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/text_agenda_light_timing"
-                app:layout_constraintTop_toBottomOf="@+id/text_agenda_light_timing"
-                app:layout_constraintVertical_bias="0.559" />
-
-        </com.google.android.material.chip.ChipGroup>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

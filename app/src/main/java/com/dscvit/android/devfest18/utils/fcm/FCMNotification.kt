@@ -45,7 +45,7 @@ object FCMNotification {
 
                 .setDefaults(Notification.DEFAULT_ALL)
 
-                .setSmallIcon(R.drawable.ic_stat_fcm)
+//                .setSmallIcon(R.drawable.ic_stat_fcm)
                 .setContentTitle(title)
                 .setContentText(text)
 

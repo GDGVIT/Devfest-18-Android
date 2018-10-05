@@ -7,13 +7,14 @@ import com.dscvit.android.devfest18.R
 import com.dscvit.android.devfest18.ui.agenda.AgendaFragment
 import com.dscvit.android.devfest18.ui.bottomsheet.NavClickListener
 import com.dscvit.android.devfest18.ui.bottomsheet.NavigationBottomSheetFragment
-import com.dscvit.android.devfest18.ui.info.about.AboutFragment
-import com.dscvit.android.devfest18.ui.info.sponsors.SponsorFragment
+import com.dscvit.android.devfest18.ui.info.InfoFragment
+import com.dscvit.android.devfest18.ui.sponsors.SponsorFragment
 import com.dscvit.android.devfest18.ui.question.QuestionFragment
 import com.dscvit.android.devfest18.ui.quiz.QuizFragment
 import com.dscvit.android.devfest18.ui.scratch.ScratchFragment
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity(), NavClickListener {
 
@@ -69,16 +70,20 @@ class MainActivity : AppCompatActivity(), NavClickListener {
                     3 -> QuizFragment.newInstance()
                     4 -> SponsorFragment.newInstance()
                     5 -> QuestionFragment.newInstance()
-                    6 -> AboutFragment.newInstance()
+                    6 -> InfoFragment.newInstance()
                     else -> SponsorFragment.newInstance()
                 })
                 .commitNow()
     }
 
     override fun onNavItemClicked(index: Int) {
-        navigationBottomSheetFragment.dismiss()
-        selectedFragmentIndex = index
-        updateFragment(index)
+        try {
+            navigationBottomSheetFragment.dismiss()
+            selectedFragmentIndex = index
+            updateFragment(index)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

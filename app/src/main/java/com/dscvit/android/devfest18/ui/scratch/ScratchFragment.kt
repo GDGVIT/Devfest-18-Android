@@ -36,16 +36,16 @@ class ScratchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        scratchCardParentView.hide()
-        afterRevealCardView.hide()
+        scratchCardParentView?.hide()
+        afterRevealCardView?.hide()
 
         sharedpreferences = activity?.getSharedPreferences(Constants.PREF_KEY, MODE_PRIVATE)
 
         sharedpreferences?.let { sharedPreferences ->
 
             if (sharedPreferences.getBoolean("revealed", false)) {
-                placeHolderView.hide()
-                afterRevealCardView.show()
+                placeHolderView?.hide()
+                afterRevealCardView?.show()
                 keyTextView?.text = sharedPreferences.getString(Constants.PREF_COUPON, "")
             } else {
                 enabledRef.addValueEventListener(object : ValueEventListener {
@@ -53,14 +53,14 @@ class ScratchFragment : Fragment() {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         val isEnabled = dataSnapshot.getValue(Boolean::class.java) ?: true
                         if (isEnabled) {
-                            placeHolderView.hide()
-                            scratchCardParentView.show()
+                            placeHolderView?.hide()
+                            scratchCardParentView?.show()
                             sharedpreferences?.let { sharedPreferences ->
                                 if (sharedPreferences.getBoolean("revealed", false)) {
-                                    placeHolderView.hide()
-                                    afterRevealCardView.show()
-                                    keyTextView.text = sharedPreferences.getString(Constants.PREF_COUPON, "")
-                                    scratchCardParentView.hide()
+                                    placeHolderView?.hide()
+                                    afterRevealCardView?.show()
+                                    keyTextView?.text = sharedPreferences.getString(Constants.PREF_COUPON, "")
+                                    scratchCardParentView?.hide()
                                 }
                             }
                         } else {

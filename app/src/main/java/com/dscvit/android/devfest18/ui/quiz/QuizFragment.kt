@@ -50,6 +50,8 @@ class QuizFragment : Fragment() {
     private var score = 0
     private var mCountDownTimer: CountDownTimer? = null
 
+    private var isQuizRunning = false
+
     private lateinit var textViewList: List<TextView>
 
     private val quizListener = object : ValueEventListener {
@@ -67,6 +69,15 @@ class QuizFragment : Fragment() {
                     2 -> completeQuiz()
                 }
             }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (isQuizRunning) {
+            completeQuiz()
+            mCountDownTimer?.cancel()
+            context?.toast("Quiz completed")
         }
     }
 
@@ -145,6 +156,7 @@ class QuizFragment : Fragment() {
     }
 
     private fun startQuiz(quiz: Quiz) {
+        isQuizRunning = true
         userRef.child(firebaseUser!!.uid).removeEventListener(userListener)
         updateScore()
         this.quiz = quiz
@@ -165,16 +177,16 @@ class QuizFragment : Fragment() {
 //                stopTimer()
 //            }, QUIZ_TIMEOUT)
 
-            progersssbar_quiz_timer.progress = 0
+            progersssbar_quiz_timer?.progress = 0
 
             mCountDownTimer = object : CountDownTimer(QUIZ_TIMEOUT + 1000, 50) {
 
                 override fun onTick(millisUntilFinished: Long) {
-                    progersssbar_quiz_timer.incrementProgressBy(1)
+                    progersssbar_quiz_timer?.incrementProgressBy(1)
                 }
 
                 override fun onFinish() {
-                    progersssbar_quiz_timer.progress = progersssbar_quiz_timer.max
+                    progersssbar_quiz_timer?.progress = progersssbar_quiz_timer.max
                     removeClickListeners()
                     stopTimer()
                 }
@@ -225,10 +237,10 @@ class QuizFragment : Fragment() {
 
     private fun setClickListeners() {
         for (i in 0 until textViewList.size) {
-            textViewList[i].setOnClickListener {
+            textViewList[i]?.setOnClickListener {
                 resetOptions()
                 clickedOptionPosition = i
-                textViewList[i].setQuizOptionSelected()
+                textViewList[i]?.setQuizOptionSelected()
             }
         }
     }
@@ -252,13 +264,14 @@ class QuizFragment : Fragment() {
     }
 
     private fun completeQuiz() {
+        isQuizRunning = false
         quizRef.removeEventListener(quizListener)
         mAuth.removeAuthStateListener(authListener)
         hideAll()
         sharedPreferences?.edit()?.putBoolean(Constants.PREF_QUIZ_COMPLETED, true)?.apply()
         quiz.quizList = listOf()
         layout_quiz_completed?.show()
-        text_quiz_score_final?.text = "You scored $score"
+        text_quiz_score_final?.text = "YOUR SCORE - $score"
     }
 
     private fun hideAll() {

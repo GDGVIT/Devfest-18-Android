@@ -33,6 +33,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.toast
+import java.lang.Exception
 
 
 class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
@@ -61,8 +62,8 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
 
         updateAccountUI(mAuth.currentUser)
 
-        sign_in_button.setOnClickListener { signIn() }
-        sign_out_button.setOnClickListener { signOut() }
+        sign_in_button?.setOnClickListener { signIn() }
+        sign_out_button?.setOnClickListener { signOut() }
 
         setupNavListViews()
         updateNavList(MainActivity.selectedFragmentIndex)
@@ -98,14 +99,22 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
     }
 
     private fun signIn() {
-        val signInIntent = mGoogleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+        try {
+            val signInIntent = mGoogleSignInClient.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
+        } catch (e: Exception) {
+            context?.toast("An error occurred")
+        }
     }
 
     private fun signOut() {
-        mAuth.signOut()
-        mGoogleSignInClient.signOut().addOnCompleteListener {
-            updateAccountUI(null)
+        try {
+            mAuth.signOut()
+            mGoogleSignInClient.signOut().addOnCompleteListener {
+                updateAccountUI(null)
+            }
+        } catch (e: Exception) {
+            context?.toast("An error occurred")
         }
     }
 
@@ -115,62 +124,64 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
             layout_nav_before_auth?.hide()
             layout_nav_after_auth?.show()
 
-            Glide.with(requireContext()).load(user.photoUrl).into(image_account)
-            text_account_username.text = user.displayName
-            text_account_email.text = user.email
+            image_account?.let {
+                Glide.with(requireContext()).load(user.photoUrl).into(image_account)
+            }
+            text_account_username?.text = user.displayName
+            text_account_email?.text = user.email
         } ?: run {
 
             layout_nav_before_auth?.show()
             layout_nav_after_auth?.hide()
-            image_account.imageResource = R.drawable.ic_account_circle_white_24dp
+            image_account?.imageResource = R.drawable.ic_account_circle_white_24dp
         }
     }
 
     private fun setupNavListViews() {
-        layout_nav_main.setOnClickListener {
+        layout_nav_main?.setOnClickListener {
             navClickListener?.onNavItemClicked(0)
         }
-        layout_nav_agenda.setOnClickListener {
+        layout_nav_agenda?.setOnClickListener {
             navClickListener?.onNavItemClicked(1)
         }
-        layout_nav_scratch.setOnClickListener {
+        layout_nav_scratch?.setOnClickListener {
             navClickListener?.onNavItemClicked(2)
         }
-        layout_nav_quiz.setOnClickListener {
+        layout_nav_quiz?.setOnClickListener {
             navClickListener?.onNavItemClicked(3)
         }
-        layout_nav_sponsors.setOnClickListener {
+        layout_nav_sponsors?.setOnClickListener {
             navClickListener?.onNavItemClicked(4)
         }
-        layout_nav_questions.setOnClickListener {
+        layout_nav_questions?.setOnClickListener {
             navClickListener?.onNavItemClicked(5)
         }
-        layout_nav_about.setOnClickListener {
+        layout_nav_about?.setOnClickListener {
             navClickListener?.onNavItemClicked(6)
         }
         resetBackgrounds()
     }
 
     private fun resetBackgrounds() {
-        text_nav_main.setBackgroundResource(0)
-        text_nav_agenda.setBackgroundResource(0)
-        text_nav_scratch.setBackgroundResource(0)
-        text_nav_quiz.setBackgroundResource(0)
-        text_nav_sponsors.setBackgroundResource(0)
-        text_nav_questions.setBackgroundResource(0)
-        text_nav_about.setBackgroundResource(0)
+        text_nav_main?.setBackgroundResource(0)
+        text_nav_agenda?.setBackgroundResource(0)
+        text_nav_scratch?.setBackgroundResource(0)
+        text_nav_quiz?.setBackgroundResource(0)
+        text_nav_sponsors?.setBackgroundResource(0)
+        text_nav_questions?.setBackgroundResource(0)
+        text_nav_about?.setBackgroundResource(0)
     }
 
     private fun updateNavList(index: Int) {
         val bgResourceId = R.drawable.bg_nav_sheet_selection_gradient
         when(index) {
-            0 -> text_nav_main.backgroundResource = bgResourceId
-            1 -> text_nav_agenda.backgroundResource = bgResourceId
-            2 -> text_nav_scratch.backgroundResource = bgResourceId
-            3 -> text_nav_quiz.backgroundResource = bgResourceId
-            4 -> text_nav_sponsors.backgroundResource = bgResourceId
-            5 -> text_nav_questions.backgroundResource = bgResourceId
-            6 -> text_nav_about.backgroundResource = bgResourceId
+            0 -> text_nav_main?.backgroundResource = bgResourceId
+            1 -> text_nav_agenda?.backgroundResource = bgResourceId
+            2 -> text_nav_scratch?.backgroundResource = bgResourceId
+            3 -> text_nav_quiz?.backgroundResource = bgResourceId
+            4 -> text_nav_sponsors?.backgroundResource = bgResourceId
+            5 -> text_nav_questions?.backgroundResource = bgResourceId
+            6 -> text_nav_about?.backgroundResource = bgResourceId
         }
     }
 }

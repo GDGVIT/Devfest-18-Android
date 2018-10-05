@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity(), NavClickListener {
     }
 
     private fun updateFragment(index: Int) {
+        fab_main_add.hide()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.container, when(index) {
                     1 -> AgendaFragment.newInstance()

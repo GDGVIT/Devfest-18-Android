@@ -13,17 +13,22 @@ import kotlinx.android.synthetic.main.item_agenda_light.view.*
 import kotlinx.android.synthetic.main.item_question_details.view.*
 
 class QuestionAdapter(
-        var questions: ArrayList<Question>,
-        var userId: String
+        var questions: ArrayList<Question?>?,
+        var userId: String,
+        val listener: (Question) -> Unit
 ) : RecyclerView.Adapter<QuestionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = QuestionViewHolder(parent.inflate(R.layout.item_question_details))
 
-    override fun getItemCount() = questions.size
+    override fun getItemCount() = questions?.size ?: 0
 
-    override fun onBindViewHolder(holder: QuestionViewHolder, position: Int) = holder.bind(questions[position], userId)
+    override fun onBindViewHolder(holder: QuestionViewHolder, position: Int) {
+        questions?.get(position)?.let {
+            holder.bind(it, userId, listener)
+        }
+    }
 
-    fun updateList(newQuestions: ArrayList<Question>) {
+    fun updateList(newQuestions: ArrayList<Question?>?) {
         questions = newQuestions
         notifyDataSetChanged()
     }
@@ -32,13 +37,17 @@ class QuestionAdapter(
 
 class QuestionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(question: Question, userId: String) = with(itemView) {
+    fun bind(question: Question, userId: String, listener: (Question) -> Unit) = with(itemView) {
 
         text_question_upvotes.text = question.upvotes.toInt().toString()
         text_question.text = question.question
 
         if (userId in question.upVotedList) {
-            ImageViewCompat.setImageTintList(image_agenda_light_icon, ColorStateList.valueOf(resources.getColor(R.color.colorPrimary)))
+            ImageViewCompat.setImageTintList(button_question_upvote, ColorStateList.valueOf(resources.getColor(R.color.colorPrimary)))
+        } else {
+            ImageViewCompat.setImageTintList(button_question_upvote, ColorStateList.valueOf(resources.getColor(R.color.white_90)))
         }
+
+        button_question_upvote.setOnClickListener { listener(question) }
     }
 }

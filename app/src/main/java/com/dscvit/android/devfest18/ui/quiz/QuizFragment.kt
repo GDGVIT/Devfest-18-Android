@@ -39,7 +39,7 @@ class QuizFragment : Fragment() {
     private val database = FirebaseDatabase.getInstance()
     private val quizRef = database.getReference("quiz")
     private var firebaseUser: FirebaseUser? = null
-    private var userRef = database.getReference("users")
+    private var userRef = database.getReference("quizUsers")
 
     private var sharedPreferences: SharedPreferences? = null
 

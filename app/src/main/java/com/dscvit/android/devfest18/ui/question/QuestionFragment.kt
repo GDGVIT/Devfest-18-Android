@@ -1,23 +1,18 @@
 package com.dscvit.android.devfest18.ui.question
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
-import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.dscvit.android.devfest18.R
 import com.dscvit.android.devfest18.model.Question
-import com.dscvit.android.devfest18.model.QuestionList
-import com.dscvit.android.devfest18.ui.MainActivity
 import com.dscvit.android.devfest18.ui.adapter.QuestionAdapter
 import com.dscvit.android.devfest18.utils.hide
 import com.dscvit.android.devfest18.utils.show
@@ -35,7 +30,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_questions.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.toast
+import java.util.*
 
 class QuestionFragment : Fragment() {
 
@@ -47,13 +45,74 @@ class QuestionFragment : Fragment() {
     private val questionRef = database.getReference("questions")
 
     private var firebaseUser: FirebaseUser? = null
-    private var questionList: QuestionList? = QuestionList()
-    private var questions: ArrayList<Question>? = questionList?.mainList
+//    private var questionList: QuestionList? = QuestionList()
+    private var questions: ArrayList<Question?>? = null
+    private var speakersList: List<String>? = null
 
     private var questionAdapter: QuestionAdapter? = null
 
     var sortSelectionIndex = 0
     var filterSelectionIndex: IntArray? = null
+
+    private val questionListener = object : ValueEventListener {
+
+        override fun onCancelled(p0: DatabaseError) {
+
+        }
+
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val isQuestionsEnabled = dataSnapshot.child("questionsEnabled").getValue(Boolean::class.java)
+            isQuestionsEnabled?.let {
+                if (isQuestionsEnabled) {
+//                    questionList = it
+                    var list = ArrayList<Question?>()
+                    dataSnapshot.child("mainList").children.forEach {
+                        list.add(it.getValue(Question()::class.java))
+                    }
+                    questions = list
+
+                    showQuestions()
+                    updateList()
+                } else {
+                    showPlaceHolder()
+                }
+            }
+        }
+    }
+
+    private val authListener = FirebaseAuth.AuthStateListener {
+        it.currentUser?.let {
+
+            firebaseUser = it
+
+            context?.let {
+                with(rv_questions) {
+                    layoutManager = LinearLayoutManager(it)
+                    questionAdapter = QuestionAdapter(questions, firebaseUser!!.uid) { question ->
+                        if (firebaseUser!!.email!! == question.userEmail) {
+
+                        } else {
+                            if (firebaseUser!!.uid in question.upVotedList) {
+                                question.upvotes = question.upvotes - 1
+                                question.upVotedList.remove(firebaseUser!!.uid)
+                                questionRef.child("mainList").child(question.id).setValue(question)
+                                context.toast("Downvoted")
+                            } else {
+                                question.upvotes = question.upvotes + 1
+                                question.upVotedList.add(firebaseUser!!.uid)
+                                questionRef.child("mainList").child(question.id).setValue(question)
+                            }
+                        }
+                    }
+                    adapter = questionAdapter!!
+                }
+            }
+
+            questionRef.addValueEventListener(questionListener)
+        } ?: run {
+            showNotAuth()
+        }
+    }
 
     companion object {
         fun newInstance() = QuestionFragment()
@@ -68,6 +127,10 @@ class QuestionFragment : Fragment() {
 
 //        questionRef.setValue(questionList)
 
+        launch(UI) {
+            speakersList = resources.getStringArray(R.array.speakers_list).asList()
+        }
+
         showNotAuth()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -77,37 +140,7 @@ class QuestionFragment : Fragment() {
 
         context?.let { mGoogleSignInClient = GoogleSignIn.getClient(it, gso) }
 
-        mAuth.addAuthStateListener {
-            it.currentUser?.let {
-
-                firebaseUser = it
-                showQuestions()
-
-                context?.let {
-                    with(rv_questions) {
-                        layoutManager = LinearLayoutManager(it)
-                        questionAdapter = QuestionAdapter(questionList!!.mainList, firebaseUser!!.uid)
-                        adapter = questionAdapter!!
-                    }
-                }
-
-                questionRef.addValueEventListener(object : ValueEventListener {
-
-                    override fun onCancelled(p0: DatabaseError) {
-
-                    }
-
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        questionList = dataSnapshot.getValue(QuestionList::class.java)
-                        questions = questionList?.mainList
-//                        questionAdapter?.updateList(questionList?.mainList ?: arrayListOf())
-                        updateList()
-                    }
-                })
-            } ?: run {
-                showNotAuth()
-            }
-        }
+        mAuth.addAuthStateListener(authListener)
 
         question_sign_in_button.setOnClickListener { signIn() }
 
@@ -128,10 +161,16 @@ class QuestionFragment : Fragment() {
         activity?.fab_main_add?.show()
     }
 
+    private fun showPlaceHolder() {
+        hideAll()
+        layout_question_placeholder?.show()
+    }
+
     private fun hideAll() {
         layout_question_list?.hide()
         layout_question_not_auth?.hide()
         activity?.fab_main_add?.hide()
+        layout_question_placeholder?.hide()
     }
 
     private fun signIn() {
@@ -178,7 +217,7 @@ class QuestionFragment : Fragment() {
     private fun filter() {
         MaterialDialog(requireContext())
                 .title(text = "Filter Options")
-                .listItemsMultiChoice(R.array.speakers_list, initialSelection = filterSelectionIndex ?: intArrayOf()) { dialog, indices, items ->
+                .listItemsMultiChoice(items = speakersList, initialSelection = filterSelectionIndex ?: intArrayOf()) { dialog, indices, items ->
                     context?.toast("$indices")
                     filterSelectionIndex = indices
                 }
@@ -195,17 +234,24 @@ class QuestionFragment : Fragment() {
         .title(text = "New Question")
         .input { dialog, text ->
             var tempQuestion = Question(
+                    id = questionRef.child("mainList").push().key!!,
                     upvotes = 0.toLong(),
                     question = text.toString(),
-                    tag = "Harsh Dattani"
+                    tag = "Harsh Dattani",
+                    upVotedList = arrayListOf(""),
+                    date = Date(),
+                    userName = firebaseUser?.displayName ?: "",
+                    userEmail = firebaseUser!!.email ?: ""
             )
-            questionList?.let {
-                it.backupList.add(tempQuestion)
-                it.mainList.add(tempQuestion)
-            }
-            questionRef.setValue(questionList)
+//            questionList?.let {
+////                it.backupList.add(tempQuestion)
+////                it.mainList.add(tempQuestion)
+////            }
+////            questionRef.setValue(questionList)
+            questionRef.child("mainList").child(tempQuestion.id).setValue(tempQuestion)
+            questionRef.child("backupList").child(tempQuestion.id).setValue(tempQuestion)
 
-            FirebaseDatabase.getInstance().getReference("questionList").push().setValue(tempQuestion)
+//            FirebaseDatabase.getInstance().getReference("questionList").child("mainList").push().setValue(tempQuestion)
         }
         .positiveButton(text = "Add")
         .show()
@@ -214,12 +260,12 @@ class QuestionFragment : Fragment() {
     private fun updateList() {
 
         when(sortSelectionIndex) {
-            0 -> questions?.sortByDescending { it.upvotes }
-            1 -> questions?.sortByDescending { it.date }
+            0 -> questions?.sortByDescending { it?.upvotes }
+            1 -> questions?.sortByDescending { it?.date }
         }
 
         filterSelectionIndex?.let {  }
 
-        questionAdapter?.updateList(questions ?: arrayListOf())
+        questionAdapter?.updateList(questions)
     }
 }

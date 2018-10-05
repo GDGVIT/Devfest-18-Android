@@ -1,14 +1,16 @@
 package com.dscvit.android.devfest18.model
 
 import java.util.*
+import kotlin.collections.ArrayList
 
 data class Question(
-        var upvotes: Long = 2.toLong(),
-        var question: String = "Make something retire instantly I'm chipping don't call me michael mayers on my vicinity",
+        var id: String = "",
+        var upvotes: Long = 0.toLong(),
+        var question: String = "",
 //        var tagList: List<String> = listOf("tag1", "tag2"),
-        var tag: String = "tag1",
-        var upVotedList: List<String> = listOf("id1", "id2"),
+        var tag: String = "",
+        var upVotedList: ArrayList<String> = arrayListOf(""),
         var date: Date = Date(),
-        var userName: String = "Bleh",
-        var userEmail: String = "bleh@bleh.com"
+        var userName: String = "",
+        var userEmail: String = ""
 )

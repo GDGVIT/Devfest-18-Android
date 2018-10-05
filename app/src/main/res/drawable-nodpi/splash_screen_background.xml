@@ -10,7 +10,7 @@
             android:gravity="center"
             android:width="10dp"
             android:height="10dp"
-            android:src="@drawable/dsclogo"/>
+            android:src="@drawable/app_logo"/>
     </item>
 
 </layer-list>

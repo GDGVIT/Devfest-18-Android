@@ -198,25 +198,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layout_nav_sponsors"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true">
-
-        <TextView
-            android:id="@+id/text_nav_sponsors"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:drawableLeft="@drawable/ic_account_multiple_white"
-            android:drawablePadding="@dimen/text_drawable_left_padding"
-            android:gravity="center_vertical"
-            android:padding="@dimen/textview_padding"
-            android:text="Sponsors" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/layout_nav_questions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -233,6 +214,25 @@
             android:gravity="center_vertical"
             android:padding="@dimen/textview_padding"
             android:text="Questions" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_nav_sponsors"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/text_nav_sponsors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:drawableLeft="@drawable/ic_account_multiple_white"
+            android:drawablePadding="@dimen/text_drawable_left_padding"
+            android:gravity="center_vertical"
+            android:padding="@dimen/textview_padding"
+            android:text="Sponsors" />
     </LinearLayout>
 
     <LinearLayout

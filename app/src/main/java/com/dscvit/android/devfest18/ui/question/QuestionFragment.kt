@@ -34,11 +34,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_questions.*
+import kotlinx.android.synthetic.main.fragment_quiz.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.childrenSequence
 import org.jetbrains.anko.toast
 import java.util.*
+import kotlin.collections.ArrayList
 
 class QuestionFragment : Fragment() {
 
@@ -137,7 +139,7 @@ class QuestionFragment : Fragment() {
             speakersList = resources.getStringArray(R.array.speakers_list).asList()
         }
 
-        showNotAuth()
+        hideAll()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -225,10 +227,12 @@ class QuestionFragment : Fragment() {
                 .title(text = "Filter Options")
                 .listItemsMultiChoice(items = speakersList, initialSelection = filterSelectionIndex ?: intArrayOf()) { dialog, indices, items ->
                     filterSelectionIndex = indices
+                    updateList()
                 }
                 .positiveButton(text = "Choose")
                 .negativeButton(text = "Clear") {
                     filterSelectionIndex = null
+                    updateList()
                 }
                 .show()
     }
@@ -265,29 +269,35 @@ class QuestionFragment : Fragment() {
 //                        chipGroup.checkedChipId
 //                        input.text
 //                        context?.toast("${chipGroup.checkedChipId} - ${input.text}")
-                        var tempQuestion = Question(
-                                id = questionRef.child("mainList").push().key!!,
-                                upvotes = 0.toLong(),
-                                question = input.text.toString(),
-                                tag = when(chipGroup.checkedChipId) {
-                                    R.id.chip1 -> requireContext().getString(R.string.speaker_0)
-                                    R.id.chip2 -> requireContext().getString(R.string.speaker_1)
-                                    R.id.chip3 -> requireContext().getString(R.string.speaker_2)
-                                    R.id.chip4 -> requireContext().getString(R.string.speaker_3)
-                                    R.id.chip5 -> requireContext().getString(R.string.speaker_4)
-                                    R.id.chip6 -> requireContext().getString(R.string.speaker_5)
-                                    R.id.chip7 -> requireContext().getString(R.string.speaker_6)
-                                    R.id.chip8 -> requireContext().getString(R.string.speaker_7)
-                                    R.id.chip9 -> requireContext().getString(R.string.speaker_8)
-                                    else -> ""
-                                },
-                                upVotedList = arrayListOf(""),
-                                date = Date(),
-                                userName = firebaseUser?.displayName ?: "",
-                                userEmail = firebaseUser!!.email ?: ""
-                        )
-                        questionRef.child("mainList").child(tempQuestion.id).setValue(tempQuestion)
-                        questionRef.child("backupList").child(tempQuestion.id).setValue(tempQuestion)
+                        val inputText = input.text.toString()
+                        if (inputText.isNullOrBlank() || inputText.isNullOrEmpty()) {
+                            context?.toast("Question can't be empty")
+                        } else {
+                            var tempQuestion = Question(
+                                    id = questionRef.child("mainList").push().key!!,
+                                    upvotes = 0.toLong(),
+                                    question = input.text.toString(),
+                                    tag = when (chipGroup.checkedChipId) {
+                                        R.id.chip1 -> requireContext().getString(R.string.speaker_0)
+                                        R.id.chip2 -> requireContext().getString(R.string.speaker_1)
+                                        R.id.chip3 -> requireContext().getString(R.string.speaker_2)
+                                        R.id.chip4 -> requireContext().getString(R.string.speaker_3)
+                                        R.id.chip5 -> requireContext().getString(R.string.speaker_4)
+                                        R.id.chip6 -> requireContext().getString(R.string.speaker_5)
+                                        R.id.chip7 -> requireContext().getString(R.string.speaker_6)
+                                        R.id.chip8 -> requireContext().getString(R.string.speaker_7)
+                                        R.id.chip9 -> requireContext().getString(R.string.speaker_8)
+                                        else -> ""
+                                    },
+                                    upVotedList = arrayListOf(""),
+                                    date = Date(),
+                                    userName = firebaseUser?.displayName ?: "",
+                                    userEmail = firebaseUser!!.email ?: ""
+                            )
+                            questionRef.child("mainList").child(tempQuestion.id).setValue(tempQuestion)
+                            questionRef.child("backupList").child(tempQuestion.id).setValue(tempQuestion)
+                        }
+
                     }
                 }
                 .negativeButton(text = "Cancel")
@@ -299,10 +309,32 @@ class QuestionFragment : Fragment() {
         var tempQuestions = questions
 
         filterSelectionIndex?.let { filterIndices ->
+
+//            val tempTagList = arrayListOf<String>()
+//            filterIndices.forEach {
+//                tempTagList.add(speakersList!!.get(it))
+//            }
+
             tempQuestions = ArrayList(questions!!.filter {
-//                filterIndices.contains(speakersList!!.indexOf(it!!.tag))
-                speakersList!!.indexOf(it!!.tag) == 0
+                filterIndices.contains(speakersList!!.indexOf(it!!.tag))
+//                speakersList!!.indexOf(it!!.tag) == 0
             })
+
+//            tempQuestions?.forEach {
+//                it?.let {
+//                    if (it.tag !in tempTagList) {
+//                        tempQuestions.remove(it)
+//                    }
+//                }
+//            }
+        }
+
+        if (tempQuestions?.size == 0) {
+            text_empty_questions_placeholder?.show()
+            rv_questions?.hide()
+        } else {
+            text_empty_questions_placeholder?.hide()
+            rv_questions?.show()
         }
 
         when(sortSelectionIndex) {

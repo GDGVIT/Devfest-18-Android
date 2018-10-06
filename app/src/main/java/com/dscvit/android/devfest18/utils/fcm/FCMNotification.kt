@@ -36,16 +36,14 @@ object FCMNotification {
 //        val picture = BitmapFactory.decodeResource(res, R.drawable.example_picture)
 
 
-        val title = res.getString(
-                R.string.fcm_notification_title_template, exampleString)
-        val text = res.getString(
-                R.string.fcm_notification_placeholder_text_template, exampleString)
+        val title = "Important updates"
+        val text = exampleString
 
         val builder = NotificationCompat.Builder(context)
 
                 .setDefaults(Notification.DEFAULT_ALL)
 
-//                .setSmallIcon(R.drawable.ic_stat_fcm)
+                .setSmallIcon(R.drawable.ic_stat_fcm)
                 .setContentTitle(title)
                 .setContentText(text)
 
@@ -63,7 +61,7 @@ object FCMNotification {
                 .setStyle(NotificationCompat.BigTextStyle()
                         .bigText(text)
                         .setBigContentTitle(title)
-                        .setSummaryText("Dummy summary text"))
+                        .setSummaryText("Important updates"))
 
 //                .addAction(
 //                        R.drawable.ic_action_stat_share,

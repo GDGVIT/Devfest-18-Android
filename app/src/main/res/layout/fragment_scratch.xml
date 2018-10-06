@@ -60,7 +60,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:gravity="center_horizontal"
-                android:text="Check back here later to find a unique key from a Scratch Card and stand a chance towin exclusive goodies."
+                android:text="Check back here later to find a unique key from a Scratch Card and stand a chance to win exclusive goodies."
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

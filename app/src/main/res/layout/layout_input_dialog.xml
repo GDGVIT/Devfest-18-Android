@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:text="Select a spekaer " />
+        android:text="Select a speaker" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/input_chip_group"

@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <View
             android:id="@+id/divider5"
@@ -78,10 +78,20 @@
             android:layout_height="1dp"
             android:background="?android:attr/listDivider" />
 
+        <TextView
+            android:id="@+id/text_empty_questions_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="32dp"
+            android:gravity="center"
+            android:text="No questions to show. Click on the plus button to add a question"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_questions"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             tools:listitem="@layout/item_question_details" />
     </LinearLayout>
 

@@ -26,6 +26,9 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_quiz.*
 import org.jetbrains.anko.toast
+import android.net.ConnectivityManager
+import kotlinx.android.synthetic.main.fragment_questions.*
+
 
 class QuizFragment : Fragment() {
 
@@ -34,23 +37,24 @@ class QuizFragment : Fragment() {
     private val QUIZ_TIMEOUT: Long = 10000
     private val QUIZ_INTERVAL: Long = 2000
 
+    //TODO: remove "test"
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private val database = FirebaseDatabase.getInstance()
-    private val quizRef = database.getReference("quiz")
+    private val quizRef = database.getReference("testQuiz")
     private var firebaseUser: FirebaseUser? = null
-    private var userRef = database.getReference("quizUsers")
+    private var userRef = database.getReference("testQuizUsers")
 
     private var sharedPreferences: SharedPreferences? = null
 
     private var quiz = Quiz()
     private var clickedOptionPosition = -1
     private var questionIndex = 0
-    private var isQuizCompleted = false
     private var score = 0
     private var mCountDownTimer: CountDownTimer? = null
 
     private var isQuizRunning = false
+    private var isQuizCompleted = false
 
     private lateinit var textViewList: List<TextView>
 
@@ -65,26 +69,23 @@ class QuizFragment : Fragment() {
             quiz?.let {
                 when(it.quizEnabled.toInt()) {
                     0 -> hideQuiz()
-                    1 -> startQuiz(it)
+                    1 -> {
+                        if (isQuizCompleted) {
+                            completeQuiz()
+                        } else {
+                            startQuiz(it)
+                        }
+                    }
                     2 -> completeQuiz()
                 }
             }
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        if (isQuizRunning) {
-            completeQuiz()
-            mCountDownTimer?.cancel()
-            context?.toast("Quiz completed")
-        }
-    }
-
     private val authListener = FirebaseAuth.AuthStateListener { authListener ->
         authListener.currentUser?.let {
             firebaseUser = it
-            userRef.child(firebaseUser!!.uid).addValueEventListener(userListener)
+            initalise()
         } ?: run {
             showNotAuth()
         }
@@ -100,10 +101,14 @@ class QuizFragment : Fragment() {
                 //FIXME: This is causing error because if score is updated during quiz this ends the quiz
                 val dbScore: Long = dataSnapshot.child("score").getValue(Long::class.java)!!
                 score = dbScore.toInt()
-                completeQuiz()
+//                isCompletedQuiz = true
             } else {
-                quizRef.addValueEventListener(quizListener)
+                userRef.child(firebaseUser!!.uid).child("score").setValue(0)
+                userRef.child(firebaseUser!!.uid).child("userName").setValue(firebaseUser!!.displayName)
+                userRef.child(firebaseUser!!.uid).child("email").setValue(firebaseUser!!.email)
+                score = 0
             }
+            quizRef.addValueEventListener(quizListener)
         }
     }
 
@@ -117,6 +122,8 @@ class QuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        layout_quiz_loader?.show()
+
         sharedPreferences = activity?.getSharedPreferences(Constants.PREF_KEY, Context.MODE_PRIVATE)
 
         textViewList = listOf(
@@ -129,23 +136,45 @@ class QuizFragment : Fragment() {
 //        hideQuiz()
 
         isQuizCompleted = sharedPreferences?.getBoolean(Constants.PREF_QUIZ_COMPLETED, false) ?: false
+
         score = sharedPreferences?.getInt(Constants.PREF_QUIZ_SCORE, 0) ?: 0
 
-        //TODO: toggle '&& false'
-        if (isQuizCompleted) {
-            completeQuiz()
+//        //TODO: toggle '&& false'
+//        if (isQuizCompleted) {
+//            completeQuiz()
+//        } else {
+////            hideQuiz()
+//            mAuth.addAuthStateListener(authListener)
+//
+//            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                    .requestIdToken(getString(R.string.default_web_client_id))
+//                    .requestEmail()
+//                    .build()
+//
+//            context?.let { mGoogleSignInClient = GoogleSignIn.getClient(it, gso) }
+//
+//            quiz_sign_in_button.setOnClickListener { signIn() }
+//        }
+
+        mAuth.addAuthStateListener(authListener)
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+
+        context?.let { mGoogleSignInClient = GoogleSignIn.getClient(it, gso) }
+
+        quiz_sign_in_button.setOnClickListener { signIn() }
+
+        button_quiz_retry?.setOnClickListener { initalise() }
+    }
+
+    private fun initalise() {
+        if (isOnline()) {
+            userRef.child(firebaseUser!!.uid).addValueEventListener(userListener)
         } else {
-//            hideQuiz()
-            mAuth.addAuthStateListener(authListener)
-
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
-                    .requestEmail()
-                    .build()
-
-            context?.let { mGoogleSignInClient = GoogleSignIn.getClient(it, gso) }
-
-            quiz_sign_in_button.setOnClickListener { signIn() }
+            showNoInternet()
         }
     }
 
@@ -156,12 +185,15 @@ class QuizFragment : Fragment() {
     }
 
     private fun startQuiz(quiz: Quiz) {
-        isQuizRunning = true
-        userRef.child(firebaseUser!!.uid).removeEventListener(userListener)
-        updateScore()
-        this.quiz = quiz
-        showQuiz()
-        startTimer()
+        if (!isQuizRunning) {
+            isQuizRunning = true
+//                userRef.child(firebaseUser!!.uid).removeEventListener(userListener)
+            score = 0
+            updateScore()
+            this.quiz = quiz
+            showQuiz()
+            startTimer()
+        }
     }
 
     private fun startTimer() {
@@ -219,11 +251,11 @@ class QuizFragment : Fragment() {
 
     private fun showAnswer() {
         val currAnsIndex = getCurrentAnsIndex()
-        textViewList[currAnsIndex]?.setCorrectIndication()
+//        textViewList[currAnsIndex]?.setCorrectIndication()
         if (clickedOptionPosition != -1 && currAnsIndex != clickedOptionPosition) {
             textViewList[clickedOptionPosition]?.setWrongIndication()
-        }
-        if (currAnsIndex == clickedOptionPosition) {
+        } else if (currAnsIndex == clickedOptionPosition) {
+            textViewList[clickedOptionPosition]?.setCorrectIndication()
             score++
             updateScore()
         }
@@ -258,20 +290,35 @@ class QuizFragment : Fragment() {
         resetOptions()
     }
 
+    private fun showNoInternet() {
+        hideAll()
+        layout_quiz_nointernet?.show()
+    }
+
     private fun hideQuiz() {
         hideAll()
         layout_quiz_placeholder?.show()
+        score = 0
+        updateScore()
+        sharedPreferences?.edit()?.putBoolean(Constants.PREF_QUIZ_COMPLETED, false)?.apply()
+        isQuizCompleted = false
     }
 
     private fun completeQuiz() {
         isQuizRunning = false
-        quizRef.removeEventListener(quizListener)
-        mAuth.removeAuthStateListener(authListener)
+//        quizRef.removeEventListener(quizListener)
+//        mAuth.removeAuthStateListener(authListener)
         hideAll()
         sharedPreferences?.edit()?.putBoolean(Constants.PREF_QUIZ_COMPLETED, true)?.apply()
-        quiz.quizList = listOf()
+        isQuizCompleted = true
+//        quiz.quizList = listOf()
         layout_quiz_completed?.show()
-        text_quiz_score_final?.text = "YOUR SCORE - $score"
+        if (score < 0) {
+            text_quiz_score_final?.hide()
+        } else {
+            text_quiz_score_final?.show()
+            text_quiz_score_final?.text = "You scored  $score"
+        }
     }
 
     private fun hideAll() {
@@ -279,6 +326,8 @@ class QuizFragment : Fragment() {
         layout_quiz?.hide()
         layout_quiz_completed?.hide()
         layout_quiz_not_auth?.hide()
+        layout_quiz_nointernet?.hide()
+        layout_quiz_loader?.hide()
     }
 
     private fun updateScore() {
@@ -324,5 +373,27 @@ class QuizFragment : Fragment() {
                 context?.toast("Login failed")
             }
         }
+    }
+
+    private fun isOnline(): Boolean {
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        val netInfo = cm?.activeNetworkInfo
+        return netInfo?.isConnected ?: false
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (isQuizRunning) {
+            completeQuiz()
+            mCountDownTimer?.cancel()
+            context?.toast("Quiz completed")
+        }
+        removeListeners()
+    }
+
+    private fun removeListeners() {
+        userRef.child(firebaseUser!!.uid).removeEventListener(userListener)
+        quizRef.removeEventListener(quizListener)
+        mAuth.removeAuthStateListener(authListener)
     }
 }

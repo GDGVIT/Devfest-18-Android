@@ -16,4 +16,6 @@
     <dimen name="quiz_option_corner_radius">5dp</dimen>
     <dimen name="quiz_option_padding">16dp</dimen>
 
+    <dimen name="round_corner_radius">50dp</dimen>
+
 </resources>

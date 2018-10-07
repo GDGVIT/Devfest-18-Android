@@ -180,10 +180,10 @@
 
 
 
-    <string name="club_name">Developer Student Circle</string>
+    <string name="club_name">Developer Student Club</string>
     <string name="club_loc">VIT Vellore</string>
     <string name="title_1">About Us</string>
-    <string name="text_1">Google Developer Group, VIT Vellore is a non-profit developers group to learn, share and know more about Google technologies. Our events are open to newbies, developers, managers and organizations who are interested in Google\'s technologies or use them as part of their projects.</string>
+    <string name="text_1">Developer Student Club, VIT Vellore is a non-profit developers group to learn, share and know more about Google technologies. Our events are open to newbies, developers, managers and organizations who are interested in Google\'s technologies or use them as part of their projects.</string>
     <string name="title_2">Tech Talks</string>
     <string name="text_2">Google talks are a grassroots-style series of presentation given by various technical experts spanning a wide spectrum of topics in technology and related areas.</string>
     <string name="title_3">DevFests</string>

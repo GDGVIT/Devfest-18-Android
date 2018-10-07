@@ -1,6 +1,8 @@
 package com.dscvit.android.devfest18.ui.question
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -92,29 +94,7 @@ class QuestionFragment : Fragment() {
 
             firebaseUser = it
 
-            context?.let {
-                with(rv_questions) {
-                    layoutManager = LinearLayoutManager(it)
-                    questionAdapter = QuestionAdapter(questions, firebaseUser!!.uid) { question ->
-                        if (firebaseUser!!.email!! != question.userEmail) {
-                            if (firebaseUser!!.uid in question.upVotedList) {
-                                question.upvotes = question.upvotes - 1
-                                question.upVotedList.remove(firebaseUser!!.uid)
-                                questionRef.child("mainList").child(question.id).setValue(question)
-                                context.toast("Downvoted")
-                            } else {
-                                question.upvotes = question.upvotes + 1
-                                question.upVotedList.add(firebaseUser!!.uid)
-                                questionRef.child("mainList").child(question.id).setValue(question)
-                                context.toast("Upvoted")
-                            }
-                        } else {
-                            context.toast("Can't upvote")
-                        }
-                    }
-                    adapter = questionAdapter!!
-                }
-            }
+            initalise()
 
             questionRef.addValueEventListener(questionListener)
         } ?: run {
@@ -140,6 +120,7 @@ class QuestionFragment : Fragment() {
         }
 
         hideAll()
+        layout_questions_loader.show()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -156,11 +137,48 @@ class QuestionFragment : Fragment() {
         button_question_filter.setOnClickListener { filter() }
 
         activity?.fab_main_add?.setOnClickListener { input() }
+
+        button_questions_retry?.setOnClickListener { initalise() }
+    }
+
+    private fun initalise() {
+        if (isOnline()) {
+            context?.let {
+                with(rv_questions) {
+                    layoutManager = LinearLayoutManager(it)
+                    questionAdapter = QuestionAdapter(questions, firebaseUser!!.uid) { question ->
+                        if (firebaseUser!!.email!! != question.userEmail) {
+                            if (firebaseUser!!.uid in question.upVotedList) {
+                                question.upvotes = question.upvotes - 1
+                                question.upVotedList.remove(firebaseUser!!.uid)
+                                questionRef.child("mainList").child(question.id).setValue(question)
+                                context.toast("Downvoted")
+                            } else {
+                                question.upvotes = question.upvotes + 1
+                                question.upVotedList.add(firebaseUser!!.uid)
+                                questionRef.child("mainList").child(question.id).setValue(question)
+                                context.toast("Upvoted")
+                            }
+                        } else {
+                            context.toast("Can't upvote")
+                        }
+                    }
+                    adapter = questionAdapter!!
+                }
+            }
+        } else {
+            showNoInternet()
+        }
     }
 
     private fun showNotAuth() {
         hideAll()
         layout_question_not_auth?.show()
+    }
+
+    private fun showNoInternet() {
+        hideAll()
+        layout_question_nointernet?.show()
     }
 
     private fun showQuestions() {
@@ -179,6 +197,8 @@ class QuestionFragment : Fragment() {
         layout_question_not_auth?.hide()
         activity?.fab_main_add?.hide()
         layout_question_placeholder?.hide()
+        layout_questions_loader?.hide()
+        layout_question_nointernet?.hide()
     }
 
     private fun signIn() {
@@ -306,42 +326,37 @@ class QuestionFragment : Fragment() {
 
     private fun updateList() {
 
-        var tempQuestions = questions
+        launch(UI) {
 
-        filterSelectionIndex?.let { filterIndices ->
+            var tempQuestions = questions
 
-//            val tempTagList = arrayListOf<String>()
-//            filterIndices.forEach {
-//                tempTagList.add(speakersList!!.get(it))
-//            }
+            filterSelectionIndex?.let { filterIndices ->
 
-            tempQuestions = ArrayList(questions!!.filter {
-                filterIndices.contains(speakersList!!.indexOf(it!!.tag))
-//                speakersList!!.indexOf(it!!.tag) == 0
-            })
+                tempQuestions = ArrayList(questions!!.filter {
+                    filterIndices.contains(speakersList!!.indexOf(it!!.tag))
+                })
+            }
 
-//            tempQuestions?.forEach {
-//                it?.let {
-//                    if (it.tag !in tempTagList) {
-//                        tempQuestions.remove(it)
-//                    }
-//                }
-//            }
+            if (tempQuestions?.size == 0) {
+                text_empty_questions_placeholder?.show()
+                rv_questions?.hide()
+            } else {
+                text_empty_questions_placeholder?.hide()
+                rv_questions?.show()
+            }
+
+            when(sortSelectionIndex) {
+                0 -> tempQuestions?.sortByDescending { it?.upvotes }
+                1 -> tempQuestions?.sortByDescending { it?.date }
+            }
+
+            questionAdapter?.updateList(tempQuestions)
         }
+    }
 
-        if (tempQuestions?.size == 0) {
-            text_empty_questions_placeholder?.show()
-            rv_questions?.hide()
-        } else {
-            text_empty_questions_placeholder?.hide()
-            rv_questions?.show()
-        }
-
-        when(sortSelectionIndex) {
-            0 -> tempQuestions?.sortByDescending { it?.upvotes }
-            1 -> tempQuestions?.sortByDescending { it?.date }
-        }
-
-        questionAdapter?.updateList(tempQuestions)
+    private fun isOnline(): Boolean {
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        val netInfo = cm?.activeNetworkInfo
+        return netInfo?.isConnected ?: false
     }
 }

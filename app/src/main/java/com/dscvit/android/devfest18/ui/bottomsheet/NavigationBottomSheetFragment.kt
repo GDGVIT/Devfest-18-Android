@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import android.content.Intent
 import android.util.Log
 import androidx.fragment.app.DialogFragment
+import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
 import com.dscvit.android.devfest18.utils.hide
 import com.dscvit.android.devfest18.utils.show
@@ -63,7 +64,15 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
         updateAccountUI(mAuth.currentUser)
 
         sign_in_button?.setOnClickListener { signIn() }
-        sign_out_button?.setOnClickListener { signOut() }
+        sign_out_button?.setOnClickListener {
+            MaterialDialog(requireContext())
+                    .title(text = "Sign out?")
+                    .positiveButton(text = "Yes") {
+                        signOut()
+                    }
+                    .negativeButton(text = "No")
+                    .show()
+        }
 
         setupNavListViews()
         updateNavList(MainActivity.selectedFragmentIndex)

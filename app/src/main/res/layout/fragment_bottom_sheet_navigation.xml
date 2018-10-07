@@ -164,7 +164,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
-        android:clickable="true">
+        android:clickable="true"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/text_nav_scratch"

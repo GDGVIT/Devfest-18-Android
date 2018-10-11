@@ -1,4 +1,5 @@
-![heading](/../master/Screenshots/Playstore Illustration.png?raw=true "homepage")
+![heading](Devfest-18-Android/Screenshots/Playstore Illustration.png
+      ?raw=true "homepage")
 
 
 

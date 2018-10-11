@@ -1,4 +1,4 @@
-![title](/../master/Screenshots/Playstore Illustration.png)
+![heading](/../master/Screenshots/Playstore Illustration.png?raw=true "homepage")
 
 
 
@@ -10,16 +10,16 @@ Android app for a hackathon by DSC-VIT called Devfest. This app is backed by fir
 
 ## Screenshots
 
-![](/Users/minos.ai/AndroidStudioProjects/DSC/Devfest18/Screenshots/1.png)
+![1](/../master/Screenshots/1.png)
 
-![2](/Users/minos.ai/AndroidStudioProjects/DSC/Devfest18/Screenshots/2.png)
+![2](/../master/Screenshots/2.png)
 
-![3](/Users/minos.ai/AndroidStudioProjects/DSC/Devfest18/Screenshots/3.png)
+![3](/../master/Screenshots/3.png)
 
-![4](/Users/minos.ai/AndroidStudioProjects/DSC/Devfest18/Screenshots/4.png)
+![4](/../master/Screenshots/4.png)
 
-![5](/Users/minos.ai/AndroidStudioProjects/DSC/Devfest18/Screenshots/5.png)
+![5](/../master/Screenshots/5.png)
 
-![6](/Users/minos.ai/AndroidStudioProjects/DSC/Devfest18/Screenshots/6.png)
+![6](/../master/Screenshots/6.png)
 
-![7](/Users/minos.ai/AndroidStudioProjects/DSC/Devfest18/Screenshots/7.png)
+![7](/../master/Screenshots/7.png)

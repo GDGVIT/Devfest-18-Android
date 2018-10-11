@@ -1,4 +1,4 @@
-![](/Users/minos.ai/AndroidStudioProjects/DSC/Devfest18/Screenshots/Playstore Illustration.png)
+![](/../master/Screenshots/Playstore Illustration.png)
 
 
 

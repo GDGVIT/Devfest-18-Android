@@ -113,6 +113,13 @@
                 android:padding="8dp"
                 android:text="&#8226; Wrong answer will end the quiz" />
 
+            <TextView
+                android:id="@+id/textView28"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="&#8226; Quiz will be terminated if navigated elsewhere" />
+
         </LinearLayout>
 
         <ImageView
@@ -239,7 +246,7 @@
         android:id="@+id/layout_quiz_completed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/textView2"

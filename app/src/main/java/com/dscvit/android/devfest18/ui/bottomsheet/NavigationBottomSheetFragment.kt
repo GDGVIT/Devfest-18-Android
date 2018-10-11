@@ -67,6 +67,7 @@ class NavigationBottomSheetFragment : RoundedBottomSheetDialogFragment() {
         sign_out_button?.setOnClickListener {
             MaterialDialog(requireContext())
                     .title(text = "Sign out?")
+                    .message(text = "Do you want to sign out")
                     .positiveButton(text = "Yes") {
                         signOut()
                     }

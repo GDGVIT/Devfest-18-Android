@@ -122,6 +122,7 @@ class QuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        hideAll()
         layout_quiz_loader?.show()
 
         sharedPreferences = activity?.getSharedPreferences(Constants.PREF_KEY, Context.MODE_PRIVATE)
@@ -165,7 +166,7 @@ class QuizFragment : Fragment() {
 
         context?.let { mGoogleSignInClient = GoogleSignIn.getClient(it, gso) }
 
-        quiz_sign_in_button.setOnClickListener { signIn() }
+        quiz_sign_in_button?.setOnClickListener { signIn() }
 
         button_quiz_retry?.setOnClickListener { initalise() }
     }
@@ -302,10 +303,12 @@ class QuizFragment : Fragment() {
         updateScore()
         sharedPreferences?.edit()?.putBoolean(Constants.PREF_QUIZ_COMPLETED, false)?.apply()
         isQuizCompleted = false
+        questionIndex = 0
     }
 
     private fun completeQuiz() {
         isQuizRunning = false
+        questionIndex = 0
 //        quizRef.removeEventListener(quizListener)
 //        mAuth.removeAuthStateListener(authListener)
         hideAll()
@@ -388,12 +391,15 @@ class QuizFragment : Fragment() {
             mCountDownTimer?.cancel()
             context?.toast("Quiz completed")
         }
-        removeListeners()
+        if (isAdded) {
+            removeListeners()
+//        hideAll()
+        }
     }
 
     private fun removeListeners() {
         userRef.child(firebaseUser!!.uid).removeEventListener(userListener)
         quizRef.removeEventListener(quizListener)
-        mAuth.removeAuthStateListener(authListener)
+//        mAuth.removeAuthStateListener(authListener)
     }
 }

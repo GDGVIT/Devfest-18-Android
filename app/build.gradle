@@ -17,8 +17,8 @@ android {
         applicationId "com.dscvit.android.devfest18"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 4
-        versionName "1.1"
+        versionCode 5
+        versionName "1.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         android.defaultConfig.vectorDrawables.useSupportLibrary = true
     }
